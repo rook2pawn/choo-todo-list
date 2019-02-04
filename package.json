@@ -1,0 +1,21 @@
+{
+  "name": "choo-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server",
+    "build": "browserify -g sheetify app.js -o bundle.js",
+    "browser": "npm run build && npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^16.2.3",
+    "choo": "^6.13.1",
+    "http-server": "^0.11.1",
+    "nanocomponent": "^6.5.2",
+    "sheetify": "^7.3.3"
+  }
+}
