@@ -1,5 +1,15 @@
-.todo-app {
-  font-family: sans-serif;
+@font-face {
+  font-family: 'Fira Code';
+  font-style: normal;
+  font-weight: 400;
+  src: url(FiraCode-Light.woff2) format('woff2');
+}
+body {
+  background-image:url(weather.png);
+}
+.app {
+  padding:2em;
+  font-family: 'Fira Code', sans-serif;
 }
 
 /** add todo **/
@@ -9,20 +19,24 @@
 
 /** todo list **/
 .todo-list {
-  margin-top: 1rem;
   text-align: left;
   list-style: none;
 }
 
 /** todo item **/
 .todo-item {
-  font-family: monospace;
+  color:white;
   cursor: pointer;
-  line-height: 1.5;
+  line-height: 24px;
 }
 .todo-item__text--completed {
-  text-decoration: line-through;
   color: lightgray;
+  text-decoration:line-through;
+}
+.checkmark {
+  font-size:24px;
+  color:green;
+  content:"✔";
 }
 
 /** visibility filters **/
@@ -33,4 +47,29 @@
 }
 .filter--active {
   border-bottom: 1px solid black;
+}
+
+
+div.viewList {
+  width:40%;
+  padding:2em;
+  padding-bottom:1em;
+  background: linear-gradient(rgba(90, 150, 239, 0.2),#000);
+  border: thick ridge #b3b3b3;
+  border-radius: 33px;
+  position:relative;
+}
+div.viewList .title {
+  position:absolute;
+  top:10px; 
+  left:20px;
+}
+div.wastebasket {
+  background-image:url(wastebasket_1f5d1.png);
+  height:64px;
+  width:64px;
+}
+
+div.visibility-filters {
+  padding-top:2em;
 }

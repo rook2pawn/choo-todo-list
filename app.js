@@ -2,6 +2,7 @@ const Nanocomponent = require('nanocomponent')
 const choo = require('choo')
 const html = require('choo/html')
 const css = require("sheetify");
+css('./reset.css')
 css('./app.css')
 
 class TodoApp extends Nanocomponent {
@@ -28,7 +29,7 @@ class TodoApp extends Nanocomponent {
   }
 
   createElement (state, emit) {
-    console.log("TodoApp:render")
+    console.log("TodoApp:render : state:", state)
     this.state = state;
     this.emit = emit;
     return html`
@@ -40,6 +41,30 @@ class TodoApp extends Nanocomponent {
     `;
   }
 }
+
+class Wastebasket extends Nanocomponent {
+  constructor () {
+    super();
+  }
+  update () {
+    return false;
+  }
+  ondrop (ev) {
+    ev.preventDefault();
+    var id = ev.dataTransfer.getData("id");
+    this.emit("remove_todo", id)
+  }
+  ondragover (ev) {
+    ev.preventDefault();
+  }
+  createElement (state, emit) {
+    this.emit = emit;
+    return html`
+    <div ondrop=${this.ondrop.bind(this)} ondragover=${this.ondragover.bind(this)} class='wastebasket'></div>
+    `
+  }  
+}
+
 class ViewList extends Nanocomponent {
   constructor () {
     super();
@@ -49,11 +74,16 @@ class ViewList extends Nanocomponent {
     this.state.list[idx].completed = !this.state.list[idx].completed;
     this.rerender();
   }
+  drag(ev) {
+    console.log("ev.target.id", ev.target.id)
+    ev.dataTransfer.setData("id", ev.target.id);
+  } 
   createElement (state) {
     this.state = state;
     console.log("viewList:render", state)
     const list = state.list;
-    return html`<div><h4>ViewList</h4>
+    console.log("ViewList List:", list)
+    return html`<div class='viewList'><div class='title'>ViewList</div>
     <ul class="todo-list">
     ${list
       .filter((item) => {
@@ -74,7 +104,7 @@ class ViewList extends Nanocomponent {
         }
       })
       .map((item,idx) =>
-        html`<li onclick=${() => this.toggle(idx) } class="todo-item"><span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`)}
+        html`<li id=${`list_${idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(idx) } class="todo-item">${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`)}
     </ul>
     </div>`
   }
@@ -115,27 +145,57 @@ var app = choo()
 var todoApp = new TodoApp;
 var viewList = new ViewList;
 var selector = new Selector;
+var wastebasket = new Wastebasket;
+
+const storage = window.localStorage;
 
 function mainView (state, emit) {
   return html`<body>
-  ${todoApp.render(state, emit)}
-  ${viewList.render(state, emit)}
-  ${selector.render(state, emit)}
+  <div class='app'> 
+    ${todoApp.render(state, emit)}
+    <div style='display:flex; flex-direction:row;margin-top:2em;'>
+    ${viewList.render(state, emit)}
+    ${wastebasket.render(state, emit)}
+    </div>
+    ${selector.render(state, emit)}
+  </div>
   </body>`
 }
 app.use((state, emitter) => {
+  state.trash = [];
   state.list = [];
   emitter.on("add_todo", () => {
+    storage.setItem("state", JSON.stringify(state))
     emitter.emit("render")
   })
+  emitter.on("remove_todo", (id) => {
+    console.log("REMOVE TOODO:", id)
+    const idx = id.match(/_(\d+)/)[1]
+    const trashItem = state.list.splice(idx,1)[0];
+    state.trash.push(trashItem);
+    storage.setItem("state", JSON.stringify(state))
+    emitter.emit("render")
+  })  
 })
 app.use((state, emitter) => {
-  state.filter = "all" // "completed", "incomplete"
+  state.filter = "all" // "completed", "incomplete", "trash"
   emitter.on("changeFilter", (type) => {
     state.filter = type;
+    storage.setItem("state", JSON.stringify(state))
     viewList.rerender();
+  });
+});
 
-  })
+app.use((state, emitter) => {
+  const stateText = storage.getItem("state")
+  if (stateText) {
+    const _state = JSON.parse(stateText);
+    if (_state.list) 
+      state.list = _state.list.slice();
+    if (_state.filter) 
+      state.filter = _state.filter;
+    emitter.emit("render");
+  }
 })
 
 app.route('/', mainView)

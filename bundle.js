@@ -3,7 +3,8 @@ const Nanocomponent = require('nanocomponent')
 const choo = require('choo')
 const html = require('choo/html')
 const css = 0;
-;((require('sheetify/insert')(".todo-app {\n  font-family: sans-serif;\n}\n\n/** add todo **/\n.add-todo {\n  margin-left: 0.5rem;\n}\n\n/** todo list **/\n.todo-list {\n  margin-top: 1rem;\n  text-align: left;\n  list-style: none;\n}\n\n/** todo item **/\n.todo-item {\n  font-family: monospace;\n  cursor: pointer;\n  line-height: 1.5;\n}\n.todo-item__text--completed {\n  text-decoration: line-through;\n  color: lightgray;\n}\n\n/** visibility filters **/\n.filter {\n  padding: 0.3rem 0;\n  margin: 0 0.3rem;\n  cursor: pointer;\n}\n.filter--active {\n  border-bottom: 1px solid black;\n}") || true) && "_4d7257df")
+;((require('sheetify/insert')("/*\nhtml5doctor.com Reset Stylesheet\nv1.6.1\nLast Updated: 2010-09-17\nAuthor: Richard Clark - http://richclarkdesign.com\nTwitter: @rich_clark\n*/\n\nhtml, body, div, span, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\nabbr, address, cite, code,\ndel, dfn, em, img, ins, kbd, q, samp,\nsmall, strong, sub, sup, var,\nb, i,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section, summary,\ntime, mark, audio, video {\n    margin:0;\n    padding:0;\n    border:0;\n    outline:0;\n    font-size:100%;\n    vertical-align:baseline;\n    background:transparent;\n}\n\nbody {\n    line-height:1;\n}\n\narticle,aside,details,figcaption,figure,\nfooter,header,hgroup,menu,nav,section {\n    display:block;\n}\n\nnav ul {\n    list-style:none;\n}\n\nblockquote, q {\n    quotes:none;\n}\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n    content:'';\n    content:none;\n}\n\na {\n    margin:0;\n    padding:0;\n    font-size:100%;\n    vertical-align:baseline;\n    background:transparent;\n}\n\n/* change colours to suit your needs */\nins {\n    background-color:#ff9;\n    color:#000;\n    text-decoration:none;\n}\n\n/* change colours to suit your needs */\nmark {\n    background-color:#ff9;\n    color:#000;\n    font-style:italic;\n    font-weight:bold;\n}\n\ndel {\n    text-decoration: line-through;\n}\n\nabbr[title], dfn[title] {\n    border-bottom:1px dotted;\n    cursor:help;\n}\n\ntable {\n    border-collapse:collapse;\n    border-spacing:0;\n}\n\n/* change border colour to suit your needs */\nhr {\n    display:block;\n    height:1px;\n    border:0;\n    border-top:1px solid #cccccc;\n    margin:1em 0;\n    padding:0;\n}\n\ninput, select {\n    vertical-align:middle;\n}") || true) && "_fa32a65d")
+;((require('sheetify/insert')("@font-face {\n  font-family: 'Fira Code';\n  font-style: normal;\n  font-weight: 400;\n  src: url(FiraCode-Light.woff2) format('woff2');\n}\nbody {\n  background-image:url(weather.png);\n}\n.app {\n  padding:2em;\n  font-family: 'Fira Code', sans-serif;\n}\n\n/** add todo **/\n.add-todo {\n  margin-left: 0.5rem;\n}\n\n/** todo list **/\n.todo-list {\n  text-align: left;\n  list-style: none;\n}\n\n/** todo item **/\n.todo-item {\n  color:white;\n  cursor: pointer;\n  line-height: 24px;\n}\n.todo-item__text--completed {\n  color: lightgray;\n  text-decoration:line-through;\n}\n.checkmark {\n  font-size:24px;\n  color:green;\n  content:\"✔\";\n}\n\n/** visibility filters **/\n.filter {\n  padding: 0.3rem 0;\n  margin: 0 0.3rem;\n  cursor: pointer;\n}\n.filter--active {\n  border-bottom: 1px solid black;\n}\n\n\ndiv.viewList {\n  width:40%;\n  padding:2em;\n  padding-bottom:1em;\n  background: linear-gradient(rgba(90, 150, 239, 0.2),#000);\n  border: thick ridge #b3b3b3;\n  border-radius: 33px;\n  position:relative;\n}\ndiv.viewList .title {\n  position:absolute;\n  top:10px; \n  left:20px;\n}\ndiv.wastebasket {\n  background-image:url(wastebasket_1f5d1.png);\n  height:64px;\n  width:64px;\n}\n\ndiv.visibility-filters {\n  padding-top:2em;\n}") || true) && "_82da17fd")
 
 class TodoApp extends Nanocomponent {
   constructor () {
@@ -29,7 +30,7 @@ class TodoApp extends Nanocomponent {
   }
 
   createElement (state, emit) {
-    console.log("TodoApp:render")
+    console.log("TodoApp:render : state:", state)
     this.state = state;
     this.emit = emit;
     return html`
@@ -41,6 +42,30 @@ class TodoApp extends Nanocomponent {
     `;
   }
 }
+
+class Wastebasket extends Nanocomponent {
+  constructor () {
+    super();
+  }
+  update () {
+    return false;
+  }
+  ondrop (ev) {
+    ev.preventDefault();
+    var id = ev.dataTransfer.getData("id");
+    this.emit("remove_todo", id)
+  }
+  ondragover (ev) {
+    ev.preventDefault();
+  }
+  createElement (state, emit) {
+    this.emit = emit;
+    return html`
+    <div ondrop=${this.ondrop.bind(this)} ondragover=${this.ondragover.bind(this)} class='wastebasket'></div>
+    `
+  }  
+}
+
 class ViewList extends Nanocomponent {
   constructor () {
     super();
@@ -50,11 +75,16 @@ class ViewList extends Nanocomponent {
     this.state.list[idx].completed = !this.state.list[idx].completed;
     this.rerender();
   }
+  drag(ev) {
+    console.log("ev.target.id", ev.target.id)
+    ev.dataTransfer.setData("id", ev.target.id);
+  } 
   createElement (state) {
     this.state = state;
     console.log("viewList:render", state)
     const list = state.list;
-    return html`<div><h4>ViewList</h4>
+    console.log("ViewList List:", list)
+    return html`<div class='viewList'><div class='title'>ViewList</div>
     <ul class="todo-list">
     ${list
       .filter((item) => {
@@ -75,7 +105,7 @@ class ViewList extends Nanocomponent {
         }
       })
       .map((item,idx) =>
-        html`<li onclick=${() => this.toggle(idx) } class="todo-item"><span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`)}
+        html`<li id=${`list_${idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(idx) } class="todo-item">${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`)}
     </ul>
     </div>`
   }
@@ -116,27 +146,56 @@ var app = choo()
 var todoApp = new TodoApp;
 var viewList = new ViewList;
 var selector = new Selector;
+var wastebasket = new Wastebasket;
+
+const storage = window.localStorage;
 
 function mainView (state, emit) {
   return html`<body>
-  ${todoApp.render(state, emit)}
-  ${viewList.render(state, emit)}
-  ${selector.render(state, emit)}
+  <div class='app'> 
+    ${todoApp.render(state, emit)}
+    <div style='display:flex; flex-direction:row;margin-top:2em;'>
+    ${viewList.render(state, emit)}
+    ${wastebasket.render(state, emit)}
+    </div>
+    ${selector.render(state, emit)}
+  </div>
   </body>`
 }
 app.use((state, emitter) => {
   state.list = [];
   emitter.on("add_todo", () => {
+    storage.setItem("state", JSON.stringify(state))
     emitter.emit("render")
   })
+  emitter.on("remove_todo", (id) => {
+    console.log("REMOVE TOODO:", id)
+    const idx = id.match(/_(\d+)/)[1]
+    const trashItem = state.list.splice(idx,1);
+    console.log("trashItem:", trashItem)
+    //storage.setItem("state", JSON.stringify(state))
+    emitter.emit("render")
+  })  
 })
 app.use((state, emitter) => {
   state.filter = "all" // "completed", "incomplete"
   emitter.on("changeFilter", (type) => {
     state.filter = type;
+    storage.setItem("state", JSON.stringify(state))
     viewList.rerender();
+  });
+});
 
-  })
+app.use((state, emitter) => {
+  const stateText = storage.getItem("state")
+  if (stateText) {
+    const _state = JSON.parse(stateText);
+    if (_state.list) 
+      state.list = _state.list.slice();
+    if (_state.filter) 
+      state.filter = _state.filter;
+    emitter.emit("render");
+  }
 })
 
 app.route('/', mainView)
