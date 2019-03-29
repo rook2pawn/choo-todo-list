@@ -28,7 +28,6 @@ class TodoApp extends Nanocomponent {
     console.log("todoApp:update!");
     return true;
   }
-
   createElement (state, emit) {
     console.log("TodoApp:render : state:", state)
     this.state = state;
@@ -50,10 +49,24 @@ class Wastebasket extends Nanocomponent {
   update () {
     return false;
   }
+
+  load (el) {
+    this.el = el;
+  }
+
   ondrop (ev) {
     ev.preventDefault();
     var id = ev.dataTransfer.getData("id");
     this.emit("remove_todo", id)
+    this.el.animate([
+      {transform:'scale(1,1)'},
+      {transform:'scale(2,1)'},
+      {transform:'scale(1.5,1)'},
+      {transform:'scale(1,1)'}
+    ], 
+    {
+      duration:500
+    })
   }
   ondragover (ev) {
     ev.preventDefault();
@@ -163,6 +176,7 @@ function mainView (state, emit) {
   </body>`
 }
 app.use((state, emitter) => {
+  state.trash = [];
   state.list = [];
   emitter.on("add_todo", () => {
     storage.setItem("state", JSON.stringify(state))
@@ -171,14 +185,14 @@ app.use((state, emitter) => {
   emitter.on("remove_todo", (id) => {
     console.log("REMOVE TOODO:", id)
     const idx = id.match(/_(\d+)/)[1]
-    const trashItem = state.list.splice(idx,1);
-    console.log("trashItem:", trashItem)
-    //storage.setItem("state", JSON.stringify(state))
+    const trashItem = state.list.splice(idx,1)[0];
+    state.trash.push(trashItem);
+    storage.setItem("state", JSON.stringify(state))
     emitter.emit("render")
   })  
 })
 app.use((state, emitter) => {
-  state.filter = "all" // "completed", "incomplete"
+  state.filter = "all" // "completed", "incomplete", "trash"
   emitter.on("changeFilter", (type) => {
     state.filter = type;
     storage.setItem("state", JSON.stringify(state))
@@ -194,6 +208,8 @@ app.use((state, emitter) => {
       state.list = _state.list.slice();
     if (_state.filter) 
       state.filter = _state.filter;
+    if (_state.trash) 
+      state.trash = _state.trash;
     emitter.emit("render");
   }
 })

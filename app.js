@@ -27,7 +27,6 @@ class TodoApp extends Nanocomponent {
     console.log("todoApp:update!");
     return true;
   }
-
   createElement (state, emit) {
     console.log("TodoApp:render : state:", state)
     this.state = state;
@@ -49,10 +48,24 @@ class Wastebasket extends Nanocomponent {
   update () {
     return false;
   }
+
+  load (el) {
+    this.el = el;
+  }
+
   ondrop (ev) {
     ev.preventDefault();
     var id = ev.dataTransfer.getData("id");
     this.emit("remove_todo", id)
+    this.el.animate([
+      {transform:'scale(1,1)'},
+      {transform:'scale(2,1)'},
+      {transform:'scale(1.5,1)'},
+      {transform:'scale(1,1)'}
+    ], 
+    {
+      duration:500
+    })
   }
   ondragover (ev) {
     ev.preventDefault();
@@ -194,6 +207,8 @@ app.use((state, emitter) => {
       state.list = _state.list.slice();
     if (_state.filter) 
       state.filter = _state.filter;
+    if (_state.trash) 
+      state.trash = _state.trash;
     emitter.emit("render");
   }
 })
