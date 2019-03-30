@@ -26,6 +26,12 @@ body {
   width:100%;
   position:relative;
 }
+@media only screen and (min-width: 1200px) {
+  .app {
+    width:60%;
+    margin:0 auto;
+  }
+}
 .appTitle {
   width:80%;
 }
@@ -129,8 +135,6 @@ div.visibility-filters {
   width:100%;
   display:flex;
   justify-content:space-between;
-  border:thin solid red;
-
 }
 
 
