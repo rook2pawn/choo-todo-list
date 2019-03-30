@@ -4,7 +4,7 @@ const choo = require('choo')
 const html = require('choo/html')
 const css = 0;
 ;((require('sheetify/insert')("/*\nhtml5doctor.com Reset Stylesheet\nv1.6.1\nLast Updated: 2010-09-17\nAuthor: Richard Clark - http://richclarkdesign.com\nTwitter: @rich_clark\n*/\n\nhtml, body, div, span, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\nabbr, address, cite, code,\ndel, dfn, em, img, ins, kbd, q, samp,\nsmall, strong, sub, sup, var,\nb, i,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section, summary,\ntime, mark, audio, video {\n    margin:0;\n    padding:0;\n    border:0;\n    outline:0;\n    font-size:100%;\n    vertical-align:baseline;\n    background:transparent;\n}\n\nbody {\n    line-height:1;\n}\n\narticle,aside,details,figcaption,figure,\nfooter,header,hgroup,menu,nav,section {\n    display:block;\n}\n\nnav ul {\n    list-style:none;\n}\n\nblockquote, q {\n    quotes:none;\n}\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n    content:'';\n    content:none;\n}\n\na {\n    margin:0;\n    padding:0;\n    font-size:100%;\n    vertical-align:baseline;\n    background:transparent;\n}\n\n/* change colours to suit your needs */\nins {\n    background-color:#ff9;\n    color:#000;\n    text-decoration:none;\n}\n\n/* change colours to suit your needs */\nmark {\n    background-color:#ff9;\n    color:#000;\n    font-style:italic;\n    font-weight:bold;\n}\n\ndel {\n    text-decoration: line-through;\n}\n\nabbr[title], dfn[title] {\n    border-bottom:1px dotted;\n    cursor:help;\n}\n\ntable {\n    border-collapse:collapse;\n    border-spacing:0;\n}\n\n/* change border colour to suit your needs */\nhr {\n    display:block;\n    height:1px;\n    border:0;\n    border-top:1px solid #cccccc;\n    margin:1em 0;\n    padding:0;\n}\n\ninput, select {\n    vertical-align:middle;\n}") || true) && "_fa32a65d")
-;((require('sheetify/insert')("@font-face {\n  font-family: 'Fira Code';\n  font-style: normal;\n  font-weight: 400;\n  src: url(FiraCode-Light.woff2) format('woff2');\n}\nbody {\n  background-image:url(dark-honeycomb.png);\n  color:white;\n}\n.app {\n  padding:2em;\n  font-family: 'Fira Code', sans-serif;\n}\n\n/** add todo **/\n.add-todo {\n  margin-left: 0.5rem;\n}\n\n/** todo list **/\n.todo-list {\n  text-align: left;\n  list-style: none;\n}\n\n/** todo item **/\n.todo-item {\n  cursor: pointer;\n  line-height: 24px;\n}\n.todo-item__text--completed {\n  color: lightgray;\n  text-decoration:line-through;\n}\n.checkmark {\n  font-size:24px;\n  color:green;\n  content:\"✔\";\n}\n\n/** visibility filters **/\n.filter {\n  padding: 0.3rem 0;\n  margin: 0 0.3rem;\n  cursor: pointer;\n}\n.filter--active {\n  border-bottom: 1px solid white;\n}\n\n\ndiv.viewList {\n  width:40%;\n  padding:2em;\n  padding-bottom:1em;\n  background: linear-gradient(rgba(90, 150, 239, 0.2),#000);\n  border: thick ridge #b3b3b3;\n  border-radius: 33px;\n  position:relative;\n}\ndiv.viewList .title {\n  position:absolute;\n  top:10px; \n  left:20px;\n}\ndiv.wastebasket {\n  background-image:url(wastebasket_1f5d1.png);\n  height:64px;\n  width:64px;\n  transition:  transform 1s;\n}\ndiv.wastebasket:hover {\n  cursor:pointer;\n  transform: scale(1.2,1.2);\n}\ndiv.visibility-filters {\n  padding-top:2em;\n}") || true) && "_bfb1e7f1")
+;((require('sheetify/insert')("@font-face {\n  font-family: 'Fira Code';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/FiraCode-Light.woff2) format('woff2');\n}\n@font-face {\n  font-family:'Calibri';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/Calibri.ttf)  format('truetype'),    \n}\n@font-face {\n  font-family:'Palatino';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/pala.ttf)  format('truetype'),    \n}\n\nbody {\n  background-image:url(dark-honeycomb.png);\n  color:white;\n}\n.app {\n  padding:2em;\n  font-family: 'Calibri', 'Fira Code', sans-serif;\n  width:60%;\n  margin:0 auto;\n  position:relative;\n}\n.appTitle {\n  width:80%;\n}\n.fontCalibri {\n  font-family: 'Calibri';\n}\n.fontPalatino {\n  font-family: 'Palatino';\n}\n.fontFiraCode {\n  font-family: 'Fira Code';\n}\n\n.fontMedium {\n  font-size:14px;\n}\n.fontLarge{\n  font-size:18px;\n}\n.fontSmall{\n  font-size:12px;\n}\n\n\n.appTitle {\n  font-size:18px;\n}\n.todo-app {\n  width:350px;\n}\n/** add todo **/\n.add-todo {\n  margin-left: 0.5rem;\n}\n\n/** todo list **/\n.todo-list {\n  text-align: left;\n  list-style: none;\n}\n\n/** todo item **/\n.todo-item {\n  cursor: pointer;\n  line-height: 24px;\n}\n.todo-item__text--completed {\n  color: lightgray;\n  text-decoration:line-through;\n}\n.checkmark {\n  font-size:24px;\n  color:green;\n  content:\"✔\";\n}\n\n/** visibility filters **/\n.filter {\n  padding: 0.3rem 0;\n  margin: 0 0.3rem;\n  cursor: pointer;\n}\n.filter--active {\n  border-bottom: 1px solid white;\n}\n\ndiv.configurationIcon {\n  cursor:pointer;\n  width:27px;\n  height:27px;\n  background-image:url(smallgear.png);\n}\ndiv.viewList {\n  width:320px;\n  padding-top:2em;\n  padding-bottom:2em;\n  padding-left:20px;\n  padding-bottom:1em;\n  background: linear-gradient(rgba(90, 150, 239, 0.2),#000);\n  border: thick ridge #b3b3b3;\n  border-radius: 33px;\n  position:relative;\n}\ndiv.viewList .title {\n  position:absolute;\n  top:10px; \n  left:20px;\n}\ndiv.wastebasket {\n  background-image:url(wastebasket_1f5d1.png);\n  height:64px;\n  width:64px;\n  transition:  transform 1s;\n  position:relative;\n}\ndiv.wastebasket:hover {\n  cursor:pointer;\n  transform: scale(1.2,1.2);\n}\ndiv.numTrash {\n  color:white;\n  border-radius:10px;\n  text-align:center;\n  font-weight:bold;\n  background-color:red;\n  width:20px;\n  line-height:20px;\n  height:20px;\n}\ndiv.visibility-filters {\n  padding-top:2em;\n}") || true) && "_51358824")
 
 class TodoApp extends Nanocomponent {
   constructor () {
@@ -12,7 +12,6 @@ class TodoApp extends Nanocomponent {
     this.init();
   }
   init () {
-    console.log("todoApp:init");
     this.textbox = "";
   }
   click (e) {
@@ -25,16 +24,14 @@ class TodoApp extends Nanocomponent {
   }
 
   update (state) {
-    console.log("todoApp:update!");
     return true;
   }
   createElement (state, emit) {
-    console.log("TodoApp:render : state:", state)
     this.state = state;
     this.emit = emit;
     return html`
     <div class="todo-app">
-      <h1>Todo List</h1>
+      <div class='appTitle'>Todo List</div>>
       <input type="text" onkeyup=${(e) => { (e.keyCode===13) ? this.click() : undefined }} onchange=${this.onchange.bind(this)} value="${this.textbox}" />
       <input type="button" value="Add Todo" onclick=${this.click.bind(this)} />
     </div>
@@ -45,9 +42,10 @@ class TodoApp extends Nanocomponent {
 class Wastebasket extends Nanocomponent {
   constructor () {
     super();
+    this.numTrash = 0;
   }
   update () {
-    return false;
+    return true;
   }
 
   load (el) {
@@ -55,6 +53,8 @@ class Wastebasket extends Nanocomponent {
   }
 
   ondrop (ev) {
+    this.numTrash++;
+    console.log("ON DROP TRASH!!:", this.numTrash);
     ev.preventDefault();
     var id = ev.dataTransfer.getData("id");
     this.emit("remove_todo", id)
@@ -67,14 +67,18 @@ class Wastebasket extends Nanocomponent {
     {
       duration:500
     })
+    this.rerender();
   }
   ondragover (ev) {
     ev.preventDefault();
   }
   createElement (state, emit) {
+    this.numTrash = state.trash.length
     this.emit = emit;
     return html`
-    <div ondrop=${this.ondrop.bind(this)} ondragover=${this.ondragover.bind(this)} class='wastebasket'></div>
+    <div ondrop=${this.ondrop.bind(this)} ondragover=${this.ondragover.bind(this)} class='wastebasket'>
+    ${(this.numTrash > 0) ? html`<div class='numTrash'>${this.numTrash}</div>` : ""}
+    </div>
     `
   }  
 }
@@ -177,8 +181,14 @@ const storage = window.localStorage;
 function mainView (state, emit) {
   return html`<body>
   <div class='app'> 
-    ${todoApp.render(state, emit)}
-    <div style='display:flex; flex-direction:row;margin-top:2em;'>
+    <div style='display:flex;justify-content:space-between;width:780px;'>
+      ${todoApp.render(state, emit)}
+      <div>
+        <div class='configuration'>Configuration</div>
+        <div class='configurationIcon'></div>
+      </div>
+    </div>
+    <div style='display:flex; flex-direction:row;justify-content:space-between;width:780px;margin-top:2em;'>
     ${viewList.render(state, emit)}
     ${wastebasket.render(state, emit)}
     </div>

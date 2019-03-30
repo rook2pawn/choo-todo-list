@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "http-server",
+    "start": "http-server -o -c-1",
     "build": "browserify -g sheetify app.js -o bundle.js",
     "browser": "npm run build && npm run start"
   },
@@ -16,6 +16,7 @@
     "choo": "^6.13.1",
     "http-server": "^0.11.1",
     "nanocomponent": "^6.5.2",
+    "opener": "^1.5.1",
     "sheetify": "^7.3.3"
   }
 }

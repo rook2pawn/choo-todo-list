@@ -2,17 +2,62 @@
   font-family: 'Fira Code';
   font-style: normal;
   font-weight: 400;
-  src: url(FiraCode-Light.woff2) format('woff2');
+  src: url(fonts/FiraCode-Light.woff2) format('woff2');
 }
+@font-face {
+  font-family:'Calibri';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/Calibri.ttf)  format('truetype'),    
+}
+@font-face {
+  font-family:'Palatino';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/pala.ttf)  format('truetype'),    
+}
+
 body {
   background-image:url(dark-honeycomb.png);
   color:white;
 }
 .app {
   padding:2em;
-  font-family: 'Fira Code', sans-serif;
+  font-family: 'Calibri', 'Fira Code', sans-serif;
+  width:60%;
+  margin:0 auto;
+  position:relative;
+}
+.appTitle {
+  width:80%;
+}
+.fontCalibri {
+  font-family: 'Calibri';
+}
+.fontPalatino {
+  font-family: 'Palatino';
+}
+.fontFiraCode {
+  font-family: 'Fira Code';
 }
 
+.fontMedium {
+  font-size:14px;
+}
+.fontLarge{
+  font-size:18px;
+}
+.fontSmall{
+  font-size:12px;
+}
+
+
+.appTitle {
+  font-size:18px;
+}
+.todo-app {
+  width:350px;
+}
 /** add todo **/
 .add-todo {
   margin-left: 0.5rem;
@@ -49,10 +94,17 @@ body {
   border-bottom: 1px solid white;
 }
 
-
+div.configurationIcon {
+  cursor:pointer;
+  width:27px;
+  height:27px;
+  background-image:url(smallgear.png);
+}
 div.viewList {
-  width:40%;
-  padding:2em;
+  width:320px;
+  padding-top:2em;
+  padding-bottom:2em;
+  padding-left:20px;
   padding-bottom:1em;
   background: linear-gradient(rgba(90, 150, 239, 0.2),#000);
   border: thick ridge #b3b3b3;
@@ -69,10 +121,21 @@ div.wastebasket {
   height:64px;
   width:64px;
   transition:  transform 1s;
+  position:relative;
 }
 div.wastebasket:hover {
   cursor:pointer;
   transform: scale(1.2,1.2);
+}
+div.numTrash {
+  color:white;
+  border-radius:10px;
+  text-align:center;
+  font-weight:bold;
+  background-color:red;
+  width:20px;
+  line-height:20px;
+  height:20px;
 }
 div.visibility-filters {
   padding-top:2em;

@@ -11,7 +11,6 @@ class TodoApp extends Nanocomponent {
     this.init();
   }
   init () {
-    console.log("todoApp:init");
     this.textbox = "";
   }
   click (e) {
@@ -24,16 +23,14 @@ class TodoApp extends Nanocomponent {
   }
 
   update (state) {
-    console.log("todoApp:update!");
     return true;
   }
   createElement (state, emit) {
-    console.log("TodoApp:render : state:", state)
     this.state = state;
     this.emit = emit;
     return html`
     <div class="todo-app">
-      <h1>Todo List</h1>
+      <div class='appTitle'>Todo List</div>>
       <input type="text" onkeyup=${(e) => { (e.keyCode===13) ? this.click() : undefined }} onchange=${this.onchange.bind(this)} value="${this.textbox}" />
       <input type="button" value="Add Todo" onclick=${this.click.bind(this)} />
     </div>
@@ -44,9 +41,10 @@ class TodoApp extends Nanocomponent {
 class Wastebasket extends Nanocomponent {
   constructor () {
     super();
+    this.numTrash = 0;
   }
   update () {
-    return false;
+    return true;
   }
 
   load (el) {
@@ -54,6 +52,8 @@ class Wastebasket extends Nanocomponent {
   }
 
   ondrop (ev) {
+    this.numTrash++;
+    console.log("ON DROP TRASH!!:", this.numTrash);
     ev.preventDefault();
     var id = ev.dataTransfer.getData("id");
     this.emit("remove_todo", id)
@@ -66,14 +66,18 @@ class Wastebasket extends Nanocomponent {
     {
       duration:500
     })
+    this.rerender();
   }
   ondragover (ev) {
     ev.preventDefault();
   }
   createElement (state, emit) {
+    this.numTrash = state.trash.length
     this.emit = emit;
     return html`
-    <div ondrop=${this.ondrop.bind(this)} ondragover=${this.ondragover.bind(this)} class='wastebasket'></div>
+    <div ondrop=${this.ondrop.bind(this)} ondragover=${this.ondragover.bind(this)} class='wastebasket'>
+    ${(this.numTrash > 0) ? html`<div class='numTrash'>${this.numTrash}</div>` : ""}
+    </div>
     `
   }  
 }
@@ -176,8 +180,14 @@ const storage = window.localStorage;
 function mainView (state, emit) {
   return html`<body>
   <div class='app'> 
-    ${todoApp.render(state, emit)}
-    <div style='display:flex; flex-direction:row;margin-top:2em;'>
+    <div style='display:flex;justify-content:space-between;width:780px;'>
+      ${todoApp.render(state, emit)}
+      <div>
+        <div class='configuration'>Configuration</div>
+        <div class='configurationIcon'></div>
+      </div>
+    </div>
+    <div style='display:flex; flex-direction:row;justify-content:space-between;width:780px;margin-top:2em;'>
     ${viewList.render(state, emit)}
     ${wastebasket.render(state, emit)}
     </div>
