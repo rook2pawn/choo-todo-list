@@ -5,7 +5,8 @@
   src: url(FiraCode-Light.woff2) format('woff2');
 }
 body {
-  background-image:url(weather.png);
+  background-image:url(dark-honeycomb.png);
+  color:white;
 }
 .app {
   padding:2em;
@@ -25,7 +26,6 @@ body {
 
 /** todo item **/
 .todo-item {
-  color:white;
   cursor: pointer;
   line-height: 24px;
 }
@@ -46,7 +46,7 @@ body {
   cursor: pointer;
 }
 .filter--active {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
 }
 
 
@@ -68,8 +68,12 @@ div.wastebasket {
   background-image:url(wastebasket_1f5d1.png);
   height:64px;
   width:64px;
+  transition:  transform 1s;
 }
-
+div.wastebasket:hover {
+  cursor:pointer;
+  transform: scale(1.2,1.2);
+}
 div.visibility-filters {
   padding-top:2em;
 }

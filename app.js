@@ -34,7 +34,7 @@ class TodoApp extends Nanocomponent {
     return html`
     <div class="todo-app">
       <h1>Todo List</h1>
-      <input type="text" onchange=${this.onchange.bind(this)} value="${this.textbox}" />
+      <input type="text" onkeyup=${(e) => { (e.keyCode===13) ? this.click() : undefined }} onchange=${this.onchange.bind(this)} value="${this.textbox}" />
       <input type="button" value="Add Todo" onclick=${this.click.bind(this)} />
     </div>
     `;
@@ -91,33 +91,43 @@ class ViewList extends Nanocomponent {
     console.log("ev.target.id", ev.target.id)
     ev.dataTransfer.setData("id", ev.target.id);
   } 
-  createElement (state) {
+
+  itemToMarkup (item,idx) {
+    return html`<li id=${`list_${idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(idx) } class="todo-item">${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`;
+  }
+
+  trashToMarkup(item, idx) {
+    return html`<li class='todo-item' id=${`trash_${idx}`}>${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span>
+    <input type='button' value='restore' onclick=${() => {this.emit("restoreFromTrash", idx)} } /></li>`
+  }
+
+  returnList (list, trash, filter) {
+    switch (filter) {
+      case 'all':
+      return list.map(this.itemToMarkup.bind(this))
+      break;
+      case 'completed':
+      return list.filter((item) => item.completed).map(this.itemToMarkup.bind(this))
+      break;
+      case 'incomplete':
+      return list.filter((item) => !item.completed).map(this.itemToMarkup.bind(this))
+      break;
+      case 'trash':
+      return trash.map(this.trashToMarkup.bind(this))
+      break;
+      default:
+      break;
+    }
+  }
+  createElement (state, emit) {
     this.state = state;
+    this.emit = emit;
     console.log("viewList:render", state)
     const list = state.list;
     console.log("ViewList List:", list)
     return html`<div class='viewList'><div class='title'>ViewList</div>
     <ul class="todo-list">
-    ${list
-      .filter((item) => {
-
-        switch (state.filter) {
-          case 'all' :
-            return true
-          break;
-          case 'completed' :
-            return item.completed
-          break;
-          case 'incomplete' :
-            return !item.completed
-          break;
-          default:
-            return true;
-          break;
-        }
-      })
-      .map((item,idx) =>
-        html`<li id=${`list_${idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(idx) } class="todo-item">${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`)}
+    ${this.returnList(list, state.trash, state.filter)}
     </ul>
     </div>`
   }
@@ -145,6 +155,7 @@ class Selector extends Nanocomponent {
       <span onclick=${() => this.filter("all")} class="filter filter${state.filter === 'all' ? '--active' : ''}">all</span>
       <span onclick=${() => this.filter("completed")} class="filter filter${state.filter === 'completed' ? '--active' : ''}">completed</span>
       <span onclick=${() => this.filter("incomplete")} class="filter filter${state.filter === 'incomplete' ? '--active' : ''}">incomplete</span>
+      <span onclick=${() => this.filter("trash")} class="filter filter${state.filter === 'trash' ? '--active' : ''}">trash</span>
       </div>
     `
   }
@@ -172,11 +183,32 @@ function mainView (state, emit) {
     </div>
     ${selector.render(state, emit)}
   </div>
+  <div><input type='button' value='total reset' onclick=${() => {emit("reset");}}/></div>
   </body>`
 }
+
+const getInitialState = () => {
+  return {
+    trash : [],
+    list : [],
+    filter: "all"
+  }
+}
 app.use((state, emitter) => {
-  state.trash = [];
-  state.list = [];
+  Object.assign(state, getInitialState())
+
+  emitter.on("reset", () => {
+    Object.assign(state, getInitialState())
+    storage.setItem("state", JSON.stringify(state))
+    emitter.emit("render")
+  });
+  emitter.on('restoreFromTrash', (idx) => {
+    const item = state.trash.splice(idx,1)[0];
+    state.list.push(item);
+    console.log("PUshing item onto state:", item, "new state:", state.list);
+    storage.setItem("state", JSON.stringify(state))
+    emitter.emit("render")
+  })
   emitter.on("add_todo", () => {
     storage.setItem("state", JSON.stringify(state))
     emitter.emit("render")

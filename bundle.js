@@ -4,7 +4,7 @@ const choo = require('choo')
 const html = require('choo/html')
 const css = 0;
 ;((require('sheetify/insert')("/*\nhtml5doctor.com Reset Stylesheet\nv1.6.1\nLast Updated: 2010-09-17\nAuthor: Richard Clark - http://richclarkdesign.com\nTwitter: @rich_clark\n*/\n\nhtml, body, div, span, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\nabbr, address, cite, code,\ndel, dfn, em, img, ins, kbd, q, samp,\nsmall, strong, sub, sup, var,\nb, i,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section, summary,\ntime, mark, audio, video {\n    margin:0;\n    padding:0;\n    border:0;\n    outline:0;\n    font-size:100%;\n    vertical-align:baseline;\n    background:transparent;\n}\n\nbody {\n    line-height:1;\n}\n\narticle,aside,details,figcaption,figure,\nfooter,header,hgroup,menu,nav,section {\n    display:block;\n}\n\nnav ul {\n    list-style:none;\n}\n\nblockquote, q {\n    quotes:none;\n}\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n    content:'';\n    content:none;\n}\n\na {\n    margin:0;\n    padding:0;\n    font-size:100%;\n    vertical-align:baseline;\n    background:transparent;\n}\n\n/* change colours to suit your needs */\nins {\n    background-color:#ff9;\n    color:#000;\n    text-decoration:none;\n}\n\n/* change colours to suit your needs */\nmark {\n    background-color:#ff9;\n    color:#000;\n    font-style:italic;\n    font-weight:bold;\n}\n\ndel {\n    text-decoration: line-through;\n}\n\nabbr[title], dfn[title] {\n    border-bottom:1px dotted;\n    cursor:help;\n}\n\ntable {\n    border-collapse:collapse;\n    border-spacing:0;\n}\n\n/* change border colour to suit your needs */\nhr {\n    display:block;\n    height:1px;\n    border:0;\n    border-top:1px solid #cccccc;\n    margin:1em 0;\n    padding:0;\n}\n\ninput, select {\n    vertical-align:middle;\n}") || true) && "_fa32a65d")
-;((require('sheetify/insert')("@font-face {\n  font-family: 'Fira Code';\n  font-style: normal;\n  font-weight: 400;\n  src: url(FiraCode-Light.woff2) format('woff2');\n}\nbody {\n  background-image:url(weather.png);\n}\n.app {\n  padding:2em;\n  font-family: 'Fira Code', sans-serif;\n}\n\n/** add todo **/\n.add-todo {\n  margin-left: 0.5rem;\n}\n\n/** todo list **/\n.todo-list {\n  text-align: left;\n  list-style: none;\n}\n\n/** todo item **/\n.todo-item {\n  color:white;\n  cursor: pointer;\n  line-height: 24px;\n}\n.todo-item__text--completed {\n  color: lightgray;\n  text-decoration:line-through;\n}\n.checkmark {\n  font-size:24px;\n  color:green;\n  content:\"✔\";\n}\n\n/** visibility filters **/\n.filter {\n  padding: 0.3rem 0;\n  margin: 0 0.3rem;\n  cursor: pointer;\n}\n.filter--active {\n  border-bottom: 1px solid black;\n}\n\n\ndiv.viewList {\n  width:40%;\n  padding:2em;\n  padding-bottom:1em;\n  background: linear-gradient(rgba(90, 150, 239, 0.2),#000);\n  border: thick ridge #b3b3b3;\n  border-radius: 33px;\n  position:relative;\n}\ndiv.viewList .title {\n  position:absolute;\n  top:10px; \n  left:20px;\n}\ndiv.wastebasket {\n  background-image:url(wastebasket_1f5d1.png);\n  height:64px;\n  width:64px;\n}\n\ndiv.visibility-filters {\n  padding-top:2em;\n}") || true) && "_82da17fd")
+;((require('sheetify/insert')("@font-face {\n  font-family: 'Fira Code';\n  font-style: normal;\n  font-weight: 400;\n  src: url(FiraCode-Light.woff2) format('woff2');\n}\nbody {\n  background-image:url(dark-honeycomb.png);\n  color:white;\n}\n.app {\n  padding:2em;\n  font-family: 'Fira Code', sans-serif;\n}\n\n/** add todo **/\n.add-todo {\n  margin-left: 0.5rem;\n}\n\n/** todo list **/\n.todo-list {\n  text-align: left;\n  list-style: none;\n}\n\n/** todo item **/\n.todo-item {\n  cursor: pointer;\n  line-height: 24px;\n}\n.todo-item__text--completed {\n  color: lightgray;\n  text-decoration:line-through;\n}\n.checkmark {\n  font-size:24px;\n  color:green;\n  content:\"✔\";\n}\n\n/** visibility filters **/\n.filter {\n  padding: 0.3rem 0;\n  margin: 0 0.3rem;\n  cursor: pointer;\n}\n.filter--active {\n  border-bottom: 1px solid white;\n}\n\n\ndiv.viewList {\n  width:40%;\n  padding:2em;\n  padding-bottom:1em;\n  background: linear-gradient(rgba(90, 150, 239, 0.2),#000);\n  border: thick ridge #b3b3b3;\n  border-radius: 33px;\n  position:relative;\n}\ndiv.viewList .title {\n  position:absolute;\n  top:10px; \n  left:20px;\n}\ndiv.wastebasket {\n  background-image:url(wastebasket_1f5d1.png);\n  height:64px;\n  width:64px;\n  transition:  transform 1s;\n}\ndiv.wastebasket:hover {\n  cursor:pointer;\n  transform: scale(1.2,1.2);\n}\ndiv.visibility-filters {\n  padding-top:2em;\n}") || true) && "_bfb1e7f1")
 
 class TodoApp extends Nanocomponent {
   constructor () {
@@ -35,7 +35,7 @@ class TodoApp extends Nanocomponent {
     return html`
     <div class="todo-app">
       <h1>Todo List</h1>
-      <input type="text" onchange=${this.onchange.bind(this)} value="${this.textbox}" />
+      <input type="text" onkeyup=${(e) => { (e.keyCode===13) ? this.click() : undefined }} onchange=${this.onchange.bind(this)} value="${this.textbox}" />
       <input type="button" value="Add Todo" onclick=${this.click.bind(this)} />
     </div>
     `;
@@ -92,33 +92,43 @@ class ViewList extends Nanocomponent {
     console.log("ev.target.id", ev.target.id)
     ev.dataTransfer.setData("id", ev.target.id);
   } 
-  createElement (state) {
+
+  itemToMarkup (item,idx) {
+    return html`<li id=${`list_${idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(idx) } class="todo-item">${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`;
+  }
+
+  trashToMarkup(item, idx) {
+    return html`<li class='todo-item' id=${`trash_${idx}`}>${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span>
+    <input type='button' value='restore' onclick=${() => {this.emit("restoreFromTrash", idx)} } /></li>`
+  }
+
+  returnList (list, trash, filter) {
+    switch (filter) {
+      case 'all':
+      return list.map(this.itemToMarkup.bind(this))
+      break;
+      case 'completed':
+      return list.filter((item) => item.completed).map(this.itemToMarkup.bind(this))
+      break;
+      case 'incomplete':
+      return list.filter((item) => !item.completed).map(this.itemToMarkup.bind(this))
+      break;
+      case 'trash':
+      return trash.map(this.trashToMarkup.bind(this))
+      break;
+      default:
+      break;
+    }
+  }
+  createElement (state, emit) {
     this.state = state;
+    this.emit = emit;
     console.log("viewList:render", state)
     const list = state.list;
     console.log("ViewList List:", list)
     return html`<div class='viewList'><div class='title'>ViewList</div>
     <ul class="todo-list">
-    ${list
-      .filter((item) => {
-
-        switch (state.filter) {
-          case 'all' :
-            return true
-          break;
-          case 'completed' :
-            return item.completed
-          break;
-          case 'incomplete' :
-            return !item.completed
-          break;
-          default:
-            return true;
-          break;
-        }
-      })
-      .map((item,idx) =>
-        html`<li id=${`list_${idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(idx) } class="todo-item">${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`)}
+    ${this.returnList(list, state.trash, state.filter)}
     </ul>
     </div>`
   }
@@ -146,6 +156,7 @@ class Selector extends Nanocomponent {
       <span onclick=${() => this.filter("all")} class="filter filter${state.filter === 'all' ? '--active' : ''}">all</span>
       <span onclick=${() => this.filter("completed")} class="filter filter${state.filter === 'completed' ? '--active' : ''}">completed</span>
       <span onclick=${() => this.filter("incomplete")} class="filter filter${state.filter === 'incomplete' ? '--active' : ''}">incomplete</span>
+      <span onclick=${() => this.filter("trash")} class="filter filter${state.filter === 'trash' ? '--active' : ''}">trash</span>
       </div>
     `
   }
@@ -173,11 +184,32 @@ function mainView (state, emit) {
     </div>
     ${selector.render(state, emit)}
   </div>
+  <div><input type='button' value='total reset' onclick=${() => {emit("reset");}}/></div>
   </body>`
 }
+
+const getInitialState = () => {
+  return {
+    trash : [],
+    list : [],
+    filter: "all"
+  }
+}
 app.use((state, emitter) => {
-  state.trash = [];
-  state.list = [];
+  Object.assign(state, getInitialState())
+
+  emitter.on("reset", () => {
+    Object.assign(state, getInitialState())
+    storage.setItem("state", JSON.stringify(state))
+    emitter.emit("render")
+  });
+  emitter.on('restoreFromTrash', (idx) => {
+    const item = state.trash.splice(idx,1)[0];
+    state.list.push(item);
+    console.log("PUshing item onto state:", item, "new state:", state.list);
+    storage.setItem("state", JSON.stringify(state))
+    emitter.emit("render")
+  })
   emitter.on("add_todo", () => {
     storage.setItem("state", JSON.stringify(state))
     emitter.emit("render")
