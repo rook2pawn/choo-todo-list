@@ -1,9 +1,17 @@
 const Nanocomponent = require('nanocomponent')
 const choo = require('choo')
 const html = require('choo/html')
+const polyfill = require("mobile-drag-drop").polyfill;
+
+// options are optional ;)
+polyfill();
+
 const css = require("sheetify");
 css('./reset.css')
 css('./app.css')
+
+// for safari IOS
+window.addEventListener( 'touchmove', function() {});
 
 class TodoApp extends Nanocomponent {
   constructor () {
@@ -75,7 +83,7 @@ class Wastebasket extends Nanocomponent {
     this.numTrash = state.trash.length
     this.emit = emit;
     return html`
-    <div ondrop=${this.ondrop.bind(this)} ondragover=${this.ondragover.bind(this)} class='wastebasket'>
+    <div ondrop=${this.ondrop.bind(this)} ondragenter=${(e) => e.preventDefault()} ondragover=${this.ondragover.bind(this)} class='wastebasket'>
     ${(this.numTrash > 0) ? html`<div class='numTrash'>${this.numTrash}</div>` : ""}
     </div>
     `
@@ -180,20 +188,20 @@ const storage = window.localStorage;
 function mainView (state, emit) {
   return html`<body>
   <div class='app'> 
-    <div style='display:flex;justify-content:space-between;width:780px;'>
+    <div style='display:flex;justify-content:space-between;'>
       ${todoApp.render(state, emit)}
       <div>
         <div class='configuration'>Configuration</div>
         <div class='configurationIcon'></div>
       </div>
     </div>
-    <div style='display:flex; flex-direction:row;justify-content:space-between;width:780px;margin-top:2em;'>
+    <div style='display:flex; flex-direction:row;justify-content:space-between;margin-top:2em;'>
     ${viewList.render(state, emit)}
     ${wastebasket.render(state, emit)}
     </div>
     ${selector.render(state, emit)}
   </div>
-  <div><input type='button' value='total reset' onclick=${() => {emit("reset");}}/></div>
+  <div style='position:fixed; bottom:0; right:0;'><input type='button' value='total reset' onclick=${() => {emit("reset");}}/></div>
   </body>`
 }
 

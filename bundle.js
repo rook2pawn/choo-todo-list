@@ -2,9 +2,17 @@
 const Nanocomponent = require('nanocomponent')
 const choo = require('choo')
 const html = require('choo/html')
+const polyfill = require("mobile-drag-drop").polyfill;
+
+// options are optional ;)
+polyfill();
+
 const css = 0;
 ;((require('sheetify/insert')("/*\nhtml5doctor.com Reset Stylesheet\nv1.6.1\nLast Updated: 2010-09-17\nAuthor: Richard Clark - http://richclarkdesign.com\nTwitter: @rich_clark\n*/\n\nhtml, body, div, span, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\nabbr, address, cite, code,\ndel, dfn, em, img, ins, kbd, q, samp,\nsmall, strong, sub, sup, var,\nb, i,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section, summary,\ntime, mark, audio, video {\n    margin:0;\n    padding:0;\n    border:0;\n    outline:0;\n    font-size:100%;\n    vertical-align:baseline;\n    background:transparent;\n}\n\nbody {\n    line-height:1;\n}\n\narticle,aside,details,figcaption,figure,\nfooter,header,hgroup,menu,nav,section {\n    display:block;\n}\n\nnav ul {\n    list-style:none;\n}\n\nblockquote, q {\n    quotes:none;\n}\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n    content:'';\n    content:none;\n}\n\na {\n    margin:0;\n    padding:0;\n    font-size:100%;\n    vertical-align:baseline;\n    background:transparent;\n}\n\n/* change colours to suit your needs */\nins {\n    background-color:#ff9;\n    color:#000;\n    text-decoration:none;\n}\n\n/* change colours to suit your needs */\nmark {\n    background-color:#ff9;\n    color:#000;\n    font-style:italic;\n    font-weight:bold;\n}\n\ndel {\n    text-decoration: line-through;\n}\n\nabbr[title], dfn[title] {\n    border-bottom:1px dotted;\n    cursor:help;\n}\n\ntable {\n    border-collapse:collapse;\n    border-spacing:0;\n}\n\n/* change border colour to suit your needs */\nhr {\n    display:block;\n    height:1px;\n    border:0;\n    border-top:1px solid #cccccc;\n    margin:1em 0;\n    padding:0;\n}\n\ninput, select {\n    vertical-align:middle;\n}") || true) && "_fa32a65d")
-;((require('sheetify/insert')("@font-face {\n  font-family: 'Fira Code';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/FiraCode-Light.woff2) format('woff2');\n}\n@font-face {\n  font-family:'Calibri';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/Calibri.ttf)  format('truetype'),    \n}\n@font-face {\n  font-family:'Palatino';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/pala.ttf)  format('truetype'),    \n}\n\nbody {\n  background-image:url(dark-honeycomb.png);\n  color:white;\n}\n.app {\n  padding:2em;\n  font-family: 'Calibri', 'Fira Code', sans-serif;\n  width:60%;\n  margin:0 auto;\n  position:relative;\n}\n.appTitle {\n  width:80%;\n}\n.fontCalibri {\n  font-family: 'Calibri';\n}\n.fontPalatino {\n  font-family: 'Palatino';\n}\n.fontFiraCode {\n  font-family: 'Fira Code';\n}\n\n.fontMedium {\n  font-size:14px;\n}\n.fontLarge{\n  font-size:18px;\n}\n.fontSmall{\n  font-size:12px;\n}\n\n\n.appTitle {\n  font-size:18px;\n}\n.todo-app {\n  width:350px;\n}\n/** add todo **/\n.add-todo {\n  margin-left: 0.5rem;\n}\n\n/** todo list **/\n.todo-list {\n  text-align: left;\n  list-style: none;\n}\n\n/** todo item **/\n.todo-item {\n  cursor: pointer;\n  line-height: 24px;\n}\n.todo-item__text--completed {\n  color: lightgray;\n  text-decoration:line-through;\n}\n.checkmark {\n  font-size:24px;\n  color:green;\n  content:\"✔\";\n}\n\n/** visibility filters **/\n.filter {\n  padding: 0.3rem 0;\n  margin: 0 0.3rem;\n  cursor: pointer;\n}\n.filter--active {\n  border-bottom: 1px solid white;\n}\n\ndiv.configurationIcon {\n  cursor:pointer;\n  width:27px;\n  height:27px;\n  background-image:url(smallgear.png);\n}\ndiv.viewList {\n  width:320px;\n  padding-top:2em;\n  padding-bottom:2em;\n  padding-left:20px;\n  padding-bottom:1em;\n  background: linear-gradient(rgba(90, 150, 239, 0.2),#000);\n  border: thick ridge #b3b3b3;\n  border-radius: 33px;\n  position:relative;\n}\ndiv.viewList .title {\n  position:absolute;\n  top:10px; \n  left:20px;\n}\ndiv.wastebasket {\n  background-image:url(wastebasket_1f5d1.png);\n  height:64px;\n  width:64px;\n  transition:  transform 1s;\n  position:relative;\n}\ndiv.wastebasket:hover {\n  cursor:pointer;\n  transform: scale(1.2,1.2);\n}\ndiv.numTrash {\n  color:white;\n  border-radius:10px;\n  text-align:center;\n  font-weight:bold;\n  background-color:red;\n  width:20px;\n  line-height:20px;\n  height:20px;\n}\ndiv.visibility-filters {\n  padding-top:2em;\n}") || true) && "_51358824")
+;((require('sheetify/insert')("@font-face {\n  font-family: 'Fira Code';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/FiraCode-Light.woff2) format('woff2');\n}\n@font-face {\n  font-family:'Calibri';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/Calibri.ttf)  format('truetype'),    \n}\n@font-face {\n  font-family:'Palatino';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/pala.ttf)  format('truetype'),    \n}\n\nbody {\n  background-image:url(dark-honeycomb.png);\n  color:white;\n}\n.app {\n  font-family: 'Calibri', 'Fira Code', sans-serif;\n  width:100%;\n  position:relative;\n}\n.appTitle {\n  width:80%;\n}\n.fontCalibri {\n  font-family: 'Calibri';\n}\n.fontPalatino {\n  font-family: 'Palatino';\n}\n.fontFiraCode {\n  font-family: 'Fira Code';\n}\n\n.fontMedium {\n  font-size:14px;\n}\n.fontLarge{\n  font-size:18px;\n}\n.fontSmall{\n  font-size:12px;\n}\n\n\n.appTitle {\n  font-size:18px;\n}\n.todo-app {\n}\n/** add todo **/\n.add-todo {\n  margin-left: 0.5rem;\n}\n\n/** todo list **/\n.todo-list {\n  text-align: left;\n  list-style: none;\n}\n\n/** todo item **/\n.todo-item {\n  cursor: pointer;\n  line-height: 24px;\n  margin-top:10px;\n}\n.todo-item__text--completed {\n  color: lightgray;\n  text-decoration:line-through;\n}\n.checkmark {\n  font-size:24px;\n  color:green;\n  content:\"✔\";\n}\n\ndiv.configurationIcon {\n  cursor:pointer;\n  width:27px;\n  height:27px;\n  background-image:url(smallgear.png);\n}\ndiv.viewList {\n  width:80%;\n  padding-top:2em;\n  padding-bottom:1em;\n  padding-left:20px;\n  background: linear-gradient(rgba(90, 150, 239, 0.2),#000);\n  border: thick ridge #b3b3b3;\n  border-radius: 33px;\n  position:relative;\n}\ndiv.viewList .title {\n  position:absolute;\n  top:10px; \n  left:20px;\n}\ndiv.wastebasket {\n  background-image:url(wastebasket_1f5d1.png);\n  height:64px;\n  width:64px;\n  transition:  transform 1s;\n  position:relative;\n}\ndiv.wastebasket:hover {\n  cursor:pointer;\n  transform: scale(1.2,1.2);\n}\ndiv.numTrash {\n  color:white;\n  border-radius:10px;\n  text-align:center;\n  font-weight:bold;\n  background-color:red;\n  width:20px;\n  line-height:20px;\n  height:20px;\n}\ndiv.visibility-filters {\n  padding-top:2em;\n  width:100%;\n  display:flex;\n  justify-content:space-between;\n  border:thin solid red;\n\n}\n\n\n/** visibility filters **/\n.filter {\n  cursor: pointer;\n}\n.filter--active {\n  border-bottom: 1px solid white;\n}") || true) && "_0cb3809f")
+
+// for safari IOS
+window.addEventListener( 'touchmove', function() {});
 
 class TodoApp extends Nanocomponent {
   constructor () {
@@ -76,7 +84,7 @@ class Wastebasket extends Nanocomponent {
     this.numTrash = state.trash.length
     this.emit = emit;
     return html`
-    <div ondrop=${this.ondrop.bind(this)} ondragover=${this.ondragover.bind(this)} class='wastebasket'>
+    <div ondrop=${this.ondrop.bind(this)} ondragenter=${(e) => e.preventDefault()} ondragover=${this.ondragover.bind(this)} class='wastebasket'>
     ${(this.numTrash > 0) ? html`<div class='numTrash'>${this.numTrash}</div>` : ""}
     </div>
     `
@@ -181,20 +189,20 @@ const storage = window.localStorage;
 function mainView (state, emit) {
   return html`<body>
   <div class='app'> 
-    <div style='display:flex;justify-content:space-between;width:780px;'>
+    <div style='display:flex;justify-content:space-between;'>
       ${todoApp.render(state, emit)}
       <div>
         <div class='configuration'>Configuration</div>
         <div class='configurationIcon'></div>
       </div>
     </div>
-    <div style='display:flex; flex-direction:row;justify-content:space-between;width:780px;margin-top:2em;'>
+    <div style='display:flex; flex-direction:row;justify-content:space-between;margin-top:2em;'>
     ${viewList.render(state, emit)}
     ${wastebasket.render(state, emit)}
     </div>
     ${selector.render(state, emit)}
   </div>
-  <div><input type='button' value='total reset' onclick=${() => {emit("reset");}}/></div>
+  <div style='position:fixed; bottom:0; right:0;'><input type='button' value='total reset' onclick=${() => {emit("reset");}}/></div>
   </body>`
 }
 
@@ -259,7 +267,7 @@ app.use((state, emitter) => {
 app.route('/', mainView)
 app.mount('body')
 
-},{"choo":10,"choo/html":9,"nanocomponent":19,"sheetify/insert":38}],2:[function(require,module,exports){
+},{"choo":10,"choo/html":9,"mobile-drag-drop":17,"nanocomponent":20,"sheetify/insert":39}],2:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -1606,10 +1614,10 @@ function newCall (Cls) {
   return new (Cls.bind.apply(Cls, arguments)) // eslint-disable-line
 }
 
-},{"assert":17,"nanolru":26}],9:[function(require,module,exports){
+},{"assert":18,"nanolru":27}],9:[function(require,module,exports){
 module.exports = require('nanohtml')
 
-},{"nanohtml":23}],10:[function(require,module,exports){
+},{"nanohtml":24}],10:[function(require,module,exports){
 var scrollToAnchor = require('scroll-to-anchor')
 var documentReady = require('document-ready')
 var nanotiming = require('nanotiming')
@@ -1882,7 +1890,7 @@ Choo.prototype._setCache = function (state) {
   }
 }
 
-},{"./component/cache":8,"assert":17,"document-ready":11,"nanobus":18,"nanohref":20,"nanomorph":27,"nanoquery":30,"nanoraf":31,"nanorouter":32,"nanotiming":34,"scroll-to-anchor":37,"xtend":41}],11:[function(require,module,exports){
+},{"./component/cache":8,"assert":18,"document-ready":11,"nanobus":19,"nanohref":21,"nanomorph":28,"nanoquery":31,"nanoraf":32,"nanorouter":33,"nanotiming":35,"scroll-to-anchor":38,"xtend":42}],11:[function(require,module,exports){
 'use strict'
 
 module.exports = ready
@@ -2315,6 +2323,10 @@ module.exports = insertCss;
 module.exports.insertCss = insertCss;
 
 },{}],17:[function(require,module,exports){
+/*! mobile-drag-drop 2.3.0-rc.0 | Copyright (c) 2018 Tim Ruffles | MIT License */
+!function(t,i){"object"==typeof exports&&"undefined"!=typeof module?i(exports):"function"==typeof define&&define.amd?define(["exports"],i):i(t.MobileDragDrop=t.MobileDragDrop||{})}(this,function(t){"use strict";var i="dnd-poly-",s=i+"snapback",n=["none","copy","copyLink","copyMove","link","linkMove","move","all"],h=["none","copy","move","link"];var e=function(){var t=!1;try{var i=Object.defineProperty({},"passive",{get:function(){t=!0}});window.addEventListener("test",null,i)}catch(t){}return t}();function r(t){return t&&t.tagName}function o(t,i,s){void 0===s&&(s=!0),document.addEventListener(t,i,!!e&&{passive:s})}function u(t,i){document.removeEventListener(t,i)}function a(t,i,s,n){void 0===n&&(n=!1);var h=e?{passive:!0,capture:n}:n;return t.addEventListener(i,s,h),{off:function(){t.removeEventListener(i,s,h)}}}function c(t){return 0===t.length?0:t.reduce(function(t,i){return i+t},0)/t.length}function f(t,i){for(var s=0;s<t.changedTouches.length;s++){if(t.changedTouches[s].identifier===i)return!0}return!1}function d(t,i,s){for(var n=[],h=[],e=0;e<i.touches.length;e++){var r=i.touches[e];n.push(r[t+"X"]),h.push(r[t+"Y"])}s.x=c(n),s.y=c(h)}var l=["","-webkit-"];function v(t,i,s,n,h){void 0===h&&(h=!0);var e=i.x,r=i.y;n&&(e+=n.x,r+=n.y),h&&(e-=parseInt(t.offsetWidth,10)/2,r-=parseInt(t.offsetHeight,10)/2);for(var o="translate3d("+e+"px,"+r+"px, 0)",u=0;u<l.length;u++){var a=l[u]+"transform";t.style[a]=o+" "+s[u]}}var p=function(){function t(t,i){this.t=t,this.i=i,this.s=h[0]}return Object.defineProperty(t.prototype,"dropEffect",{get:function(){return this.s},set:function(t){0!==this.t.mode&&n.indexOf(t)>-1&&(this.s=t)},enumerable:!0,configurable:!0}),Object.defineProperty(t.prototype,"types",{get:function(){if(0!==this.t.mode)return Object.freeze(this.t.types)},enumerable:!0,configurable:!0}),Object.defineProperty(t.prototype,"effectAllowed",{get:function(){return this.t.effectAllowed},set:function(t){2===this.t.mode&&n.indexOf(t)>-1&&(this.t.effectAllowed=t)},enumerable:!0,configurable:!0}),t.prototype.setData=function(t,i){if(2===this.t.mode){if(t.indexOf(" ")>-1)throw new Error("illegal arg: type contains space");this.t.data[t]=i,-1===this.t.types.indexOf(t)&&this.t.types.push(t)}},t.prototype.getData=function(t){if(1===this.t.mode||2===this.t.mode)return this.t.data[t]||""},t.prototype.clearData=function(t){if(2===this.t.mode){if(t&&this.t.data[t]){delete this.t.data[t];var i=this.t.types.indexOf(t);return void(i>-1&&this.t.types.splice(i,1))}this.t.data={},this.t.types=[]}},t.prototype.setDragImage=function(t,i,s){2===this.t.mode&&this.i(t,i,s)},t}();function g(t,i){return t?t===n[0]?h[0]:0===t.indexOf(n[1])||t===n[7]?h[1]:0===t.indexOf(n[4])?h[3]:t===n[6]?h[2]:h[1]:3===i.nodeType&&"A"===i.tagName?h[3]:h[1]}function m(t,i,s,n,h,e,r){void 0===e&&(e=!0),void 0===r&&(r=null);var o=function(t,i,s,n,h,e,r){void 0===r&&(r=null);var o=i.changedTouches[0],u=new Event(s,{bubbles:!0,cancelable:n});u.dataTransfer=e,u.relatedTarget=r,u.screenX=o.screenX,u.screenY=o.screenY,u.clientX=o.clientX,u.clientY=o.clientY,u.pageX=o.pageX,u.pageY=o.pageY;var a=t.getBoundingClientRect();return u.offsetX=u.clientX-a.left,u.offsetY=u.clientY-a.top,u}(i,s,t,e,document.defaultView,h,r),u=!i.dispatchEvent(o);return n.mode=0,u}function y(t,i){if(!t||t===n[7])return i;if(i===h[1]){if(0===t.indexOf(h[1]))return h[1]}else if(i===h[3]){if(0===t.indexOf(h[3])||t.indexOf("Link")>-1)return h[3]}else if(i===h[2]&&(0===t.indexOf(h[2])||t.indexOf("Move")>-1))return h[2];return h[0]}var b,w=function(){function t(t,i,s,n){this.h=t,this.o=i,this.u=s,this.l=n,this.v=0,this.p=null,this.g=null,this.m=t,this.I=t.changedTouches[0],this.j=this.S.bind(this),this.k=this.A.bind(this),o("touchmove",this.j,!1),o("touchend",this.k,!1),o("touchcancel",this.k,!1)}return t.prototype.O=function(){var t=this;this.v=1,this.C=h[0],this.D={data:{},effectAllowed:void 0,mode:3,types:[]},this.M={x:null,y:null},this.F={x:null,y:null};var i=this.u;if(this.N=new p(this.D,function(s,n,h){i=s,"number"!=typeof n&&"number"!=typeof h||(t.P={x:n||0,y:h||0})}),this.D.mode=2,this.N.dropEffect=h[0],m("dragstart",this.u,this.m,this.D,this.N))return this.v=3,this.T(),!1;d("page",this.m,this.F);var s,n=this.o.dragImageSetup(i);if(this.L=(s=n,l.map(function(t){var i=s.style[t+"transform"];return i&&"none"!==i?i.replace(/translate\(\D*\d+[^,]*,\D*\d+[^,]*\)\s*/g,""):""})),n.style.position="absolute",n.style.left="0px",n.style.top="0px",n.style.zIndex="999999",n.classList.add("dnd-poly-drag-image"),n.classList.add("dnd-poly-icon"),this._=n,!this.P)if(this.o.dragImageOffset)this.P={x:this.o.dragImageOffset.x,y:this.o.dragImageOffset.y};else if(this.o.dragImageCenterOnTouch){var e=getComputedStyle(i);this.P={x:0-parseInt(e.marginLeft,10),y:0-parseInt(e.marginTop,10)}}else{var r=i.getBoundingClientRect();e=getComputedStyle(i);this.P={x:r.left-this.I.clientX-parseInt(e.marginLeft,10)+r.width/2,y:r.top-this.I.clientY-parseInt(e.marginTop,10)+r.height/2}}return v(this._,this.F,this.L,this.P,this.o.dragImageCenterOnTouch),document.body.appendChild(this._),this.V=window.setInterval(function(){t.X||(t.X=!0,t.Y(),t.X=!1)},this.o.iterationInterval),!0},t.prototype.T=function(){this.V&&(clearInterval(this.V),this.V=null),u("touchmove",this.j),u("touchend",this.k),u("touchcancel",this.k),this._&&(this._.parentNode.removeChild(this._),this._=null),this.l(this.o,this.m,this.v)},t.prototype.S=function(t){var i=this;if(!1!==f(t,this.I.identifier)){if(this.m=t,0===this.v){var s=void 0;if(this.o.dragStartConditionOverride)try{s=this.o.dragStartConditionOverride(t)}catch(t){s=!1}else s=1===t.touches.length;return s?void(!0===this.O()&&(this.h.preventDefault(),t.preventDefault())):void this.T()}if(t.preventDefault(),d("client",t,this.M),d("page",t,this.F),this.o.dragImageTranslateOverride)try{var n=!1;if(this.o.dragImageTranslateOverride(t,{x:this.M.x,y:this.M.y},this.p,function(t,s){i._&&(n=!0,i.M.x+=t,i.M.y+=s,i.F.x+=t,i.F.y+=s,v(i._,i.F,i.L,i.P,i.o.dragImageCenterOnTouch))}),n)return}catch(t){}v(this._,this.F,this.L,this.P,this.o.dragImageCenterOnTouch)}},t.prototype.A=function(t){if(!1!==f(t,this.I.identifier)){if(this.o.dragImageTranslateOverride)try{this.o.dragImageTranslateOverride(void 0,void 0,void 0,function(){})}catch(t){}0!==this.v?(t.preventDefault(),this.v="touchcancel"===t.type?3:2):this.T()}},t.prototype.Y=function(){var t=this,n=this.C;this.D.mode=3,this.N.dropEffect=h[0];var e=m("drag",this.u,this.m,this.D,this.N);if(e&&(this.C=h[0]),e||2===this.v||3===this.v)return this.q(this.v)?void function(t,i,n,h){var e=getComputedStyle(t);if("hidden"!==e.visibility&&"none"!==e.display){i.classList.add(s);var r=getComputedStyle(i),o=parseFloat(r.transitionDuration);if(isNaN(o)||0===o)h();else{var u=t.getBoundingClientRect(),a={x:u.left,y:u.top};a.x+=document.body.scrollLeft||document.documentElement.scrollLeft,a.y+=document.body.scrollTop||document.documentElement.scrollTop,a.x-=parseInt(e.marginLeft,10),a.y-=parseInt(e.marginTop,10);var c=parseFloat(r.transitionDelay),f=Math.round(1e3*(o+c));v(i,a,n,void 0,!1),setTimeout(h,f)}}else h()}(this.u,this._,this.L,function(){t.B()}):void this.B();var o=this.o.elementFromPoint(this.M.x,this.M.y),u=this.g;o!==this.p&&o!==this.g&&(this.p=o,null!==this.g&&(this.D.mode=3,this.N.dropEffect=h[0],m("dragexit",this.g,this.m,this.D,this.N,!1)),null===this.p?this.g=this.p:(this.D.mode=3,this.N.dropEffect=g(this.D.effectAllowed,this.u),m("dragenter",this.p,this.m,this.D,this.N)?(this.g=this.p,this.C=y(this.N.effectAllowed,this.N.dropEffect)):this.p!==document.body&&(this.g=document.body))),u!==this.g&&r(u)&&(this.D.mode=3,this.N.dropEffect=h[0],m("dragleave",u,this.m,this.D,this.N,!1,this.g)),r(this.g)&&(this.D.mode=3,this.N.dropEffect=g(this.D.effectAllowed,this.u),!1===m("dragover",this.g,this.m,this.D,this.N)?this.C=h[0]:this.C=y(this.N.effectAllowed,this.N.dropEffect)),n!==this.C&&this._.classList.remove(i+n);var a=i+this.C;this._.classList.add(a)},t.prototype.q=function(t){var i=this.C===h[0]||null===this.g||3===t;return i?r(this.g)&&(this.D.mode=3,this.N.dropEffect=h[0],m("dragleave",this.g,this.m,this.D,this.N,!1)):r(this.g)&&(this.D.mode=1,this.N.dropEffect=this.C,!0===m("drop",this.g,this.m,this.D,this.N)?this.C=this.N.dropEffect:this.C=h[0]),i},t.prototype.B=function(){this.D.mode=3,this.N.dropEffect=this.C,m("dragend",this.u,this.m,this.D,this.N,!1),this.v=2,this.T()},t}(),x={iterationInterval:150,tryFindDraggableTarget:function(t){var i=t.target;do{if(!1!==i.draggable&&i.getAttribute&&"true"===i.getAttribute("draggable"))return i}while((i=i.parentNode)&&i!==document.body)},dragImageSetup:function(t){var i=t.cloneNode(!0);return function t(i,s){if(1===i.nodeType){for(var n=getComputedStyle(i),h=0;h<n.length;h++){var e=n[h];s.style.setProperty(e,n.getPropertyValue(e),n.getPropertyPriority(e))}if(s.style.pointerEvents="none",s.removeAttribute("id"),s.removeAttribute("class"),s.removeAttribute("draggable"),"CANVAS"===s.nodeName){var r=i,o=s,u=r.getContext("2d").getImageData(0,0,r.width,r.height);o.getContext("2d").putImageData(u,0,0)}}if(i.hasChildNodes())for(h=0;h<i.childNodes.length;h++)t(i.childNodes[h],s.childNodes[h])}(t,i),i},elementFromPoint:function(t,i){return document.elementFromPoint(t,i)}};function I(t){if(!b){var i=x.tryFindDraggableTarget(t);if(i)try{b=new w(t,x,i,S)}catch(i){throw S(x,t,3),i}}}function j(t){var i=t.target,s=function(t){h.off(),e.off(),r.off(),clearTimeout(n)},n=window.setTimeout(function(){h.off(),e.off(),r.off(),I(t)},x.holdToDrag),h=a(i,"touchend",s),e=a(i,"touchcancel",s),r=a(window,"scroll",s,!0)}function S(t,i,s){if(0===s&&t.defaultActionOverride)try{t.defaultActionOverride(i),i.defaultPrevented}catch(t){}b=null}t.polyfill=function(t){if(t&&Object.keys(t).forEach(function(i){x[i]=t[i]}),!x.forceApply){var i=(s={dragEvents:"ondragstart"in document.documentElement,draggable:"draggable"in document.documentElement,userAgentSupportingNativeDnD:void 0},n=!!window.chrome||/chrome/i.test(navigator.userAgent),s.userAgentSupportingNativeDnD=!(/iPad|iPhone|iPod|Android/.test(navigator.userAgent)||n&&"ontouchstart"in document.documentElement),s);if(i.userAgentSupportingNativeDnD&&i.draggable&&i.dragEvents)return!1}var s,n;return x.holdToDrag?o("touchstart",j,!1):o("touchstart",I,!1),!0},Object.defineProperty(t,"__esModule",{value:!0})});
+
+},{}],18:[function(require,module,exports){
 assert.notEqual = notEqual
 assert.notOk = notOk
 assert.equal = equal
@@ -2338,7 +2350,7 @@ function assert (t, m) {
   if (!t) throw new Error(m || 'AssertionError')
 }
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 var splice = require('remove-array-items')
 var nanotiming = require('nanotiming')
 var assert = require('assert')
@@ -2502,7 +2514,7 @@ Nanobus.prototype._emit = function (arr, eventName, data, uuid) {
   }
 }
 
-},{"assert":17,"nanotiming":34,"remove-array-items":36}],19:[function(require,module,exports){
+},{"assert":18,"nanotiming":35,"remove-array-items":37}],20:[function(require,module,exports){
 var document = require('global/document')
 var nanotiming = require('nanotiming')
 var morph = require('nanomorph')
@@ -2658,7 +2670,7 @@ Nanocomponent.prototype.update = function () {
   throw new Error('nanocomponent: update should be implemented!')
 }
 
-},{"assert":17,"global/document":12,"nanomorph":27,"nanotiming":34,"on-load":35}],20:[function(require,module,exports){
+},{"assert":18,"global/document":12,"nanomorph":28,"nanotiming":35,"on-load":36}],21:[function(require,module,exports){
 var assert = require('assert')
 
 var safeExternalLink = /(noopener|noreferrer) (noopener|noreferrer)/
@@ -2703,7 +2715,7 @@ function href (cb, root) {
   })
 }
 
-},{"assert":17}],21:[function(require,module,exports){
+},{"assert":18}],22:[function(require,module,exports){
 var trailingNewlineRegex = /\n[\s]+$/
 var leadingNewlineRegex = /^\n[\s]+/
 var trailingSpaceRegex = /[\s]+$/
@@ -2836,7 +2848,7 @@ module.exports = function appendChild (el, childs) {
   }
 }
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 module.exports = [
   'async', 'autofocus', 'autoplay', 'checked', 'controls', 'default',
   'defaultchecked', 'defer', 'disabled', 'formnovalidate', 'hidden',
@@ -2844,7 +2856,7 @@ module.exports = [
   'readonly', 'required', 'reversed', 'selected'
 ]
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var hyperx = require('hyperx')
 var appendChild = require('./append-child')
 var SVG_TAGS = require('./svg-tags')
@@ -2952,12 +2964,12 @@ module.exports = hyperx(nanoHtmlCreateElement, {
 module.exports.default = module.exports
 module.exports.createElement = nanoHtmlCreateElement
 
-},{"./append-child":21,"./bool-props":22,"./direct-props":24,"./svg-tags":25,"hyperx":15}],24:[function(require,module,exports){
+},{"./append-child":22,"./bool-props":23,"./direct-props":25,"./svg-tags":26,"hyperx":15}],25:[function(require,module,exports){
 module.exports = [
   'indeterminate'
 ]
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 module.exports = [
   'svg', 'altGlyph', 'altGlyphDef', 'altGlyphItem', 'animate', 'animateColor',
   'animateMotion', 'animateTransform', 'circle', 'clipPath', 'color-profile',
@@ -2975,7 +2987,7 @@ module.exports = [
   'tspan', 'use', 'view', 'vkern'
 ]
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 module.exports = LRU
 
 function LRU (opts) {
@@ -3113,7 +3125,7 @@ LRU.prototype.evict = function () {
   this.remove(this.tail)
 }
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 var assert = require('nanoassert')
 var morph = require('./lib/morph')
 
@@ -3273,7 +3285,7 @@ function same (a, b) {
   return false
 }
 
-},{"./lib/morph":29,"nanoassert":17}],28:[function(require,module,exports){
+},{"./lib/morph":30,"nanoassert":18}],29:[function(require,module,exports){
 module.exports = [
   // attribute events (can be set with attributes)
   'onclick',
@@ -3317,7 +3329,7 @@ module.exports = [
   'onfocusout'
 ]
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 var events = require('./events')
 var eventsLength = events.length
 
@@ -3483,7 +3495,7 @@ function updateAttribute (newNode, oldNode, name) {
   }
 }
 
-},{"./events":28}],30:[function(require,module,exports){
+},{"./events":29}],31:[function(require,module,exports){
 var reg = /([^?=&]+)(=([^&]*))?/g
 var assert = require('assert')
 
@@ -3500,7 +3512,7 @@ function qs (url) {
   return obj
 }
 
-},{"assert":17}],31:[function(require,module,exports){
+},{"assert":18}],32:[function(require,module,exports){
 'use strict'
 
 var assert = require('assert')
@@ -3537,7 +3549,7 @@ function nanoraf (render, raf) {
   }
 }
 
-},{"assert":17}],32:[function(require,module,exports){
+},{"assert":18}],33:[function(require,module,exports){
 var assert = require('assert')
 var wayfarer = require('wayfarer')
 
@@ -3593,7 +3605,7 @@ function pathname (routename, isElectron) {
   return decodeURI(routename.replace(suffix, '').replace(normalize, '/'))
 }
 
-},{"assert":17,"wayfarer":39}],33:[function(require,module,exports){
+},{"assert":18,"wayfarer":40}],34:[function(require,module,exports){
 var assert = require('assert')
 
 var hasWindow = typeof window !== 'undefined'
@@ -3650,7 +3662,7 @@ NanoScheduler.prototype.setTimeout = function (cb) {
 
 module.exports = createScheduler
 
-},{"assert":17}],34:[function(require,module,exports){
+},{"assert":18}],35:[function(require,module,exports){
 var scheduler = require('nanoscheduler')()
 var assert = require('assert')
 
@@ -3700,7 +3712,7 @@ function noop (cb) {
   }
 }
 
-},{"assert":17,"nanoscheduler":33}],35:[function(require,module,exports){
+},{"assert":18,"nanoscheduler":34}],36:[function(require,module,exports){
 /* global MutationObserver */
 var document = require('global/document')
 var window = require('global/window')
@@ -3804,7 +3816,7 @@ function eachMutation (nodes, fn) {
   }
 }
 
-},{"assert":17,"global/document":12,"global/window":13}],36:[function(require,module,exports){
+},{"assert":18,"global/document":12,"global/window":13}],37:[function(require,module,exports){
 'use strict'
 
 /**
@@ -3833,7 +3845,7 @@ module.exports = function removeItems (arr, startIdx, removeCount) {
   arr.length = len
 }
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 module.exports = scrollToAnchor
 
 function scrollToAnchor (anchor, options) {
@@ -3845,10 +3857,10 @@ function scrollToAnchor (anchor, options) {
   }
 }
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 module.exports = require('insert-css')
 
-},{"insert-css":16}],39:[function(require,module,exports){
+},{"insert-css":16}],40:[function(require,module,exports){
 var assert = require('assert')
 var trie = require('./trie')
 
@@ -3927,7 +3939,7 @@ function Wayfarer (dft) {
   }
 }
 
-},{"./trie":40,"assert":2}],40:[function(require,module,exports){
+},{"./trie":41,"assert":2}],41:[function(require,module,exports){
 var mutate = require('xtend/mutable')
 var assert = require('assert')
 var xtend = require('xtend')
@@ -4065,7 +4077,7 @@ Trie.prototype.mount = function (route, trie) {
   }
 }
 
-},{"assert":2,"xtend":41,"xtend/mutable":42}],41:[function(require,module,exports){
+},{"assert":2,"xtend":42,"xtend/mutable":43}],42:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -4086,7 +4098,7 @@ function extend() {
     return target
 }
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;

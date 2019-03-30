@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "http-server -o -c-1",
+    "startMobile": "http-server -c-1",
     "build": "browserify -g sheetify app.js -o bundle.js",
-    "browser": "npm run build && npm run start"
+    "browser": "npm run build && npm run start",
+    "mobile": "npm run build && npm run startMobile"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,7 @@
     "browserify": "^16.2.3",
     "choo": "^6.13.1",
     "http-server": "^0.11.1",
+    "mobile-drag-drop": "^2.3.0-rc.1",
     "nanocomponent": "^6.5.2",
     "opener": "^1.5.1",
     "sheetify": "^7.3.3"
