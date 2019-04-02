@@ -117,7 +117,10 @@ class ViewList extends Nanocomponent {
   returnList (list, trash, filter) {
     switch (filter) {
       case 'all':
-      return list.map(this.itemToMarkup.bind(this))
+      return list.map((item, idx) => {
+        item.idx = idx;
+        return item
+      }).map(this.itemToMarkup.bind(this))
       break;
       case 'completed':
       return list.map((item, idx) => { 
