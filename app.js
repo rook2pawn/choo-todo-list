@@ -22,9 +22,9 @@ class TodoApp extends Nanocomponent {
     this.textbox = "";
   }
   click (e) {
-    this.state.list.push({text:this.textbox, completed:false});
+    const text = this.textbox;
     this.init();
-    this.emit("add_todo")
+    this.emit("add_todo", text)
   }
   onchange (e) {
     this.textbox = e.target.value;
@@ -104,8 +104,8 @@ class ViewList extends Nanocomponent {
     ev.dataTransfer.setData("id", ev.target.id);
   } 
 
-  itemToMarkup (item,idx) {
-    return html`<li id=${`list_${idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(idx) } class="todo-item">${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`;
+  itemToMarkup (item) {
+    return html`<li id=${`list_${item.idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(item.idx) } class="todo-item">${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`;
   }
 
   trashToMarkup(item, idx) {
@@ -119,10 +119,16 @@ class ViewList extends Nanocomponent {
       return list.map(this.itemToMarkup.bind(this))
       break;
       case 'completed':
-      return list.filter((item) => item.completed).map(this.itemToMarkup.bind(this))
+      return list.map((item, idx) => { 
+        item.idx = idx;
+        return item
+      }).filter((item) => item.completed).map(this.itemToMarkup.bind(this))
       break;
       case 'incomplete':
-      return list.filter((item) => !item.completed).map(this.itemToMarkup.bind(this))
+      return list.map((item, idx) => { 
+        item.idx = idx;
+        return item;
+      }).filter((item) => !item.completed).map(this.itemToMarkup.bind(this))
       break;
       case 'trash':
       return trash.map(this.trashToMarkup.bind(this))
@@ -227,7 +233,8 @@ app.use((state, emitter) => {
     storage.setItem("state", JSON.stringify(state))
     emitter.emit("render")
   })
-  emitter.on("add_todo", () => {
+  emitter.on("add_todo", (text) => {
+    state.list.push({text, completed:false});
     storage.setItem("state", JSON.stringify(state))
     emitter.emit("render")
   })
@@ -253,8 +260,9 @@ app.use((state, emitter) => {
   const stateText = storage.getItem("state")
   if (stateText) {
     const _state = JSON.parse(stateText);
-    if (_state.list) 
+    if (_state.list) {
       state.list = _state.list.slice();
+    }
     if (_state.filter) 
       state.filter = _state.filter;
     if (_state.trash) 
