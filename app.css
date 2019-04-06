@@ -8,13 +8,19 @@
   font-family:'Calibri';
   font-style: normal;
   font-weight: 400;
-  src: url(fonts/Calibri.ttf)  format('truetype'),    
+  src: url(fonts/Calibri.ttf)  format('truetype');
 }
 @font-face {
   font-family:'Palatino';
   font-style: normal;
   font-weight: 400;
-  src: url(fonts/pala.ttf)  format('truetype'),    
+  src: url(fonts/pala.ttf)  format('truetype');    
+}
+@font-face {
+  font-family:"Trellicons";
+  font-style: normal;
+  font-weight:400;
+  src: url(fonts/trellicons.woff) format('woff');
 }
 
 body {
@@ -44,7 +50,11 @@ body {
 .fontFiraCode {
   font-family: 'Fira Code';
 }
-
+.fontTrellicons {
+  font-family: 'Trellicons';
+  color: #798d99; 
+  font-size:12px;
+}
 .fontMedium {
   font-size:14px;
 }
@@ -71,15 +81,43 @@ body {
   text-align: left;
   list-style: none;
 }
+.todo-item-container {
+  display:flex;
+  margin-top:5px;
+}
+div.edit {
+  border-radius: 3px;
+  width:20px;
+  height:20px;
+  background-color:#f5f6f7;
+  padding:4px;
+  cursor:pointer;
+  line-height:20px;
+  text-align:center;
+  margin-left:10px;
 
+}
+div.edit:hover {
+  color: #516b7a !important;
+  background-color: #ebeef0  
+}
+div.edit::before {
+  content: "\E947";  
+}
 /** todo item **/
 .todo-item {
+  background-color:#fff;
+  border-radius:3px;
+  box-shadow: 0 1px 0 rgba(9,45,66,.25);
+  text-decoration:none;
   cursor: pointer;
+  padding:6px 8px 2px;
+  color:#17394d;
+  min-width:250px;
   line-height: 24px;
-  margin-top:10px;
 }
 .todo-item__text--completed {
-  color: lightgray;
+  color: #868686;
   text-decoration:line-through;
 }
 .checkmark {
@@ -99,7 +137,7 @@ div.viewList {
   padding-top:2em;
   padding-bottom:1em;
   padding-left:20px;
-  background: linear-gradient(rgba(90, 150, 239, 0.2),#000);
+  background: linear-gradient(rgba(90, 150, 239, 0.2),#d2f1ba);
   border: thick ridge #b3b3b3;
   border-radius: 33px;
   position:relative;
@@ -115,10 +153,6 @@ div.wastebasket {
   width:64px;
   transition:  transform 1s;
   position:relative;
-}
-div.wastebasket:hover {
-  cursor:pointer;
-  transform: scale(1.2,1.2);
 }
 div.numTrash {
   color:white;

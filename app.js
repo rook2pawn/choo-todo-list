@@ -103,14 +103,25 @@ class ViewList extends Nanocomponent {
     console.log("ev.target.id", ev.target.id)
     ev.dataTransfer.setData("id", ev.target.id);
   } 
+  edit (idx) {
+    console.log("EDIT!!!:", idx);
+  }
 
   itemToMarkup (item) {
-    return html`<li id=${`list_${item.idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(item.idx) } class="todo-item">${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></li>`;
+    return html`<div class='todo-item-container'>
+      <div id=${`list_${item.idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(item.idx) } class="todo-item">
+        ${item.completed ? html`<span class='checkmark'>✔</span>` : ""}
+        <span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span>
+      </div>>
+      <div class="fontTrellicons edit" onclick=${() => { this.edit(item.idx) }}></div>
+    </div>`;
   }
 
   trashToMarkup(item, idx) {
-    return html`<li class='todo-item' id=${`trash_${idx}`}>${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span>
-    <input type='button' value='restore' onclick=${() => {this.emit("restoreFromTrash", idx)} } /></li>`
+    return html`<div class='todo-item-container'>
+      <div class='todo-item' id=${`trash_${idx}`}>${item.completed ? html`<span class='checkmark'>✔</span>` : ""}<span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span></div>
+      <input type='button' value='restore' onclick=${() => {this.emit("restoreFromTrash", idx)} } />
+    </div>`
   }
 
   returnList (list, trash, filter) {
@@ -147,9 +158,7 @@ class ViewList extends Nanocomponent {
     const list = state.list;
     console.log("ViewList List:", list)
     return html`<div class='viewList'><div class='title'>ViewList</div>
-    <ul class="todo-list">
     ${this.returnList(list, state.trash, state.filter)}
-    </ul>
     </div>`
   }
   update () {
@@ -224,6 +233,11 @@ const getInitialState = () => {
 app.use((state, emitter) => {
   Object.assign(state, getInitialState())
 
+  emitter.on("edit", (idx, newText) => {
+    state.list[idx].text = newText;
+    storage.setItem("state", JSON.stringify(state))
+    emitter.emit("render")
+  })
   emitter.on("reset", () => {
     Object.assign(state, getInitialState())
     storage.setItem("state", JSON.stringify(state))
