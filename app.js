@@ -2,6 +2,7 @@ const Nanocomponent = require('nanocomponent')
 const choo = require('choo')
 const html = require('choo/html')
 const polyfill = require("mobile-drag-drop").polyfill;
+const $ = require("jquery")
 
 // options are optional ;)
 polyfill();
@@ -95,23 +96,24 @@ class ViewList extends Nanocomponent {
     super();
   }
   toggle (idx) {
-    console.log("viewList:toggle:", idx)
     this.state.list[idx].completed = !this.state.list[idx].completed;
     this.rerender();
   }
   drag(ev) {
-    console.log("ev.target.id", ev.target.id)
     ev.dataTransfer.setData("id", ev.target.id);
   } 
   edit (idx) {
-    console.log("EDIT!!!:", idx);
+    const textBox = $(`div#list_${idx} span.todo-item__text`);
+    textBox.addClass("edit");
+    textBox.prop("contenteditable", true);
+    textBox.focus(); 
   }
 
   itemToMarkup (item) {
     return html`<div class='todo-item-container'>
       <div id=${`list_${item.idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(item.idx) } class="todo-item">
         ${item.completed ? html`<span class='checkmark'>✔</span>` : ""}
-        <span class="todo-item__text${item.completed ? '--completed' : ''}">${item.text}</span>
+        <span class="todo-item__text ${item.completed ? 'completed' : ''}">${item.text}</span>
       </div>>
       <div class="fontTrellicons edit" onclick=${() => { this.edit(item.idx) }}></div>
     </div>`;
@@ -251,7 +253,7 @@ app.use((state, emitter) => {
     emitter.emit("render")
   })
   emitter.on("add_todo", (text) => {
-    state.list.push({text, completed:false});
+    state.list.push({text, completed:false, dateAdded: Date.now()});
     storage.setItem("state", JSON.stringify(state))
     emitter.emit("render")
   })
