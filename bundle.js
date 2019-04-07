@@ -10,7 +10,7 @@ polyfill();
 
 const css = 0;
 ;((require('sheetify/insert')("/*\nhtml5doctor.com Reset Stylesheet\nv1.6.1\nLast Updated: 2010-09-17\nAuthor: Richard Clark - http://richclarkdesign.com\nTwitter: @rich_clark\n*/\n\nhtml, body, div, span, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\nabbr, address, cite, code,\ndel, dfn, em, img, ins, kbd, q, samp,\nsmall, strong, sub, sup, var,\nb, i,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section, summary,\ntime, mark, audio, video {\n    margin:0;\n    padding:0;\n    border:0;\n    outline:0;\n    font-size:100%;\n    vertical-align:baseline;\n    background:transparent;\n}\n\nbody {\n    line-height:1;\n}\n\narticle,aside,details,figcaption,figure,\nfooter,header,hgroup,menu,nav,section {\n    display:block;\n}\n\nnav ul {\n    list-style:none;\n}\n\nblockquote, q {\n    quotes:none;\n}\n\nblockquote:before, blockquote:after,\nq:before, q:after {\n    content:'';\n    content:none;\n}\n\na {\n    margin:0;\n    padding:0;\n    font-size:100%;\n    vertical-align:baseline;\n    background:transparent;\n}\n\n/* change colours to suit your needs */\nins {\n    background-color:#ff9;\n    color:#000;\n    text-decoration:none;\n}\n\n/* change colours to suit your needs */\nmark {\n    background-color:#ff9;\n    color:#000;\n    font-style:italic;\n    font-weight:bold;\n}\n\ndel {\n    text-decoration: line-through;\n}\n\nabbr[title], dfn[title] {\n    border-bottom:1px dotted;\n    cursor:help;\n}\n\ntable {\n    border-collapse:collapse;\n    border-spacing:0;\n}\n\n/* change border colour to suit your needs */\nhr {\n    display:block;\n    height:1px;\n    border:0;\n    border-top:1px solid #cccccc;\n    margin:1em 0;\n    padding:0;\n}\n\ninput, select {\n    vertical-align:middle;\n}") || true) && "_fa32a65d")
-;((require('sheetify/insert')("@font-face {\n  font-family: 'Fira Code';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/FiraCode-Light.woff2) format('woff2');\n}\n@font-face {\n  font-family:'Calibri';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/Calibri.ttf)  format('truetype');\n}\n@font-face {\n  font-family:'Palatino';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/pala.ttf)  format('truetype');    \n}\n@font-face {\n  font-family:\"Trellicons\";\n  font-style: normal;\n  font-weight:400;\n  src: url(fonts/trellicons.woff) format('woff');\n}\n\nbody {\n  background-image:url(dark-honeycomb.png);\n  color:white;\n}\n.app {\n  font-family: 'Calibri', 'Fira Code', sans-serif;\n  width:100%;\n  position:relative;\n}\n@media only screen and (min-width: 1200px) {\n  .app {\n    width:60%;\n    margin:0 auto;\n  }\n}\n.appTitle {\n  width:80%;\n}\n.fontCalibri {\n  font-family: 'Calibri';\n}\n.fontPalatino {\n  font-family: 'Palatino';\n}\n.fontFiraCode {\n  font-family: 'Fira Code';\n}\n.fontTrellicons {\n  font-family: 'Trellicons';\n  color: #798d99; \n  font-size:12px;\n}\n.fontMedium {\n  font-size:14px;\n}\n.fontLarge{\n  font-size:18px;\n}\n.fontSmall{\n  font-size:12px;\n}\n\n\n.appTitle {\n  font-size:18px;\n}\n.todo-app {\n}\n/** add todo **/\n.add-todo {\n  margin-left: 0.5rem;\n}\n\n/** todo list **/\n.todo-list {\n  text-align: left;\n  list-style: none;\n}\n.todo-item-container {\n  display:flex;\n  margin-top:5px;\n}\n\ndiv.edit {\n  border-radius: 3px;\n  width:20px;\n  height:20px;\n  background-color:#f5f6f7;\n  padding:4px;\n  cursor:pointer;\n  line-height:20px;\n  text-align:center;\n  margin-left:10px;\n\n}\ndiv.edit:hover {\n  color: #516b7a !important;\n  background-color: #ebeef0  \n}\ndiv.edit::before {\n  content: \"\\E947\";  \n}\n/** todo item **/\n.todo-item {\n  background-color:#fff;\n  border-radius:3px;\n  box-shadow: 0 1px 0 rgba(9,45,66,.25);\n  text-decoration:none;\n  cursor: pointer;\n  padding:6px 8px 2px;\n  color:#17394d;\n  min-width:250px;\n  line-height: 24px;\n}\n.todoitem__text .edit {\n  cursor:text;\n}\n.todo-item__text .completed {\n  color: #868686;\n  text-decoration:line-through;\n}\n.checkmark {\n  font-size:24px;\n  color:green;\n  content:\"✔\";\n}\n\ndiv.configurationIcon {\n  cursor:pointer;\n  width:27px;\n  height:27px;\n  background-image:url(smallgear.png);\n}\ndiv.viewList {\n  width:80%;\n  padding-top:2em;\n  padding-bottom:1em;\n  padding-left:20px;\n  background: linear-gradient(rgba(90, 150, 239, 0.2),#d2f1ba);\n  border: thick ridge #b3b3b3;\n  border-radius: 33px;\n  position:relative;\n}\ndiv.viewList .title {\n  position:absolute;\n  top:10px; \n  left:20px;\n}\ndiv.wastebasket {\n  background-image:url(wastebasket_1f5d1.png);\n  height:64px;\n  width:64px;\n  transition:  transform 1s;\n  position:relative;\n}\ndiv.numTrash {\n  color:white;\n  border-radius:10px;\n  text-align:center;\n  font-weight:bold;\n  background-color:red;\n  width:20px;\n  line-height:20px;\n  height:20px;\n}\ndiv.visibility-filters {\n  padding-top:2em;\n  width:100%;\n  display:flex;\n  justify-content:space-between;\n}\n\n\n/** visibility filters **/\n.filter {\n  cursor: pointer;\n}\n.filter--active {\n  border-bottom: 1px solid white;\n}") || true) && "_9fa143eb")
+;((require('sheetify/insert')("@font-face {\n  font-family: 'Fira Code';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/FiraCode-Light.woff2) format('woff2');\n}\n@font-face {\n  font-family:'Calibri';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/Calibri.ttf)  format('truetype');\n}\n@font-face {\n  font-family:'Palatino';\n  font-style: normal;\n  font-weight: 400;\n  src: url(fonts/pala.ttf)  format('truetype');    \n}\n\nbody {\n  background-image:url(dark-honeycomb.png);\n  color:white;\n}\n.show {\n  opacity:1 !important;\n}\n.svgWrapper {\n  display:flex;\n  opacity:0;\n  transition: opacity 1s;\n  background-color: #f5f6f7;\n  border-radius: 3px;\n  height: 40px;\n  width: 40px;\n  order: 0;\n  flex-wrap: wrap;\n  min-width: 0;\n  flex: 0 auto;\n  justify-content: center;\n  align-items: center;\n  cursor:pointer;\n}\n.svgWrapper.edit:hover svg path{\n  fill: #516b7a;\n}\n.svgWrapper.saveEdit:hover svg path{\n  fill:green;\n}\n.svgWrapper:hover {\n  background-color: #ebeef0;\n}\n.app {\n  font-family: 'Calibri', 'Fira Code', sans-serif;\n  width:100%;\n  position:relative;\n}\n@media only screen and (min-width: 1200px) {\n  .app {\n    width:60%;\n    margin:0 auto;\n  }\n}\n.appTitle {\n  width:80%;\n}\n.fontCalibri {\n  font-family: 'Calibri';\n}\n.fontPalatino {\n  font-family: 'Palatino';\n}\n.fontFiraCode {\n  font-family: 'Fira Code';\n}\n.fontMedium {\n  font-size:14px;\n}\n.fontLarge{\n  font-size:18px;\n}\n.fontSmall{\n  font-size:12px;\n}\n\n\n.appTitle {\n  font-size:18px;\n}\n.todo-app {\n}\n/** add todo **/\n.add-todo {\n  margin-left: 0.5rem;\n}\n\n/** todo list **/\n.todo-list {\n  text-align: left;\n  list-style: none;\n}\n.todo-item-container {\n  display:flex;\n  margin-top:5px;\n}\n\n/** todo item **/\n.todo-item {\n  background-color:#fff;\n  border-radius:3px;\n  box-shadow: 0 1px 0 rgba(9,45,66,.25);\n  text-decoration:none;\n  cursor: pointer;\n  padding:6px 8px 2px;\n  color:#17394d;\n  min-width:250px;\n  line-height: 24px;\n}\n.todoitem__text .edit {\n  cursor:text;\n}\n.todo-item__text .completed {\n  color: #868686;\n  text-decoration:line-through;\n}\n.checkmark {\n  font-size:24px;\n  color:green;\n  content:\"✔\";\n}\n\ndiv.configurationIcon {\n  cursor:pointer;\n  width:27px;\n  height:27px;\n  background-image:url(smallgear.png);\n}\ndiv.viewList {\n  width:80%;\n  padding-top:2em;\n  padding-bottom:1em;\n  padding-left:20px;\n  background: linear-gradient(rgba(90, 150, 239, 0.2),#d2f1ba);\n  border: thick ridge #b3b3b3;\n  border-radius: 33px;\n  position:relative;\n}\ndiv.viewList .title {\n  position:absolute;\n  top:10px; \n  left:20px;\n}\ndiv.wastebasket {\n  background-image:url(wastebasket_1f5d1.png);\n  height:64px;\n  width:64px;\n  transition:  transform 1s;\n  position:relative;\n}\ndiv.numTrash {\n  color:white;\n  border-radius:10px;\n  text-align:center;\n  font-weight:bold;\n  background-color:red;\n  width:20px;\n  line-height:20px;\n  height:20px;\n}\ndiv.visibility-filters {\n  padding-top:2em;\n  width:100%;\n  display:flex;\n  justify-content:space-between;\n}\n\n\n/** visibility filters **/\n.filter {\n  cursor: pointer;\n}\n.filter--active {\n  border-bottom: 1px solid white;\n}") || true) && "_9d9c9d6a")
 
 // for safari IOS
 window.addEventListener( 'touchmove', function() {});
@@ -102,22 +102,68 @@ class ViewList extends Nanocomponent {
   }
   drag(ev) {
     ev.dataTransfer.setData("id", ev.target.id);
-  } 
+  }
+  setEndOfContenteditable (contentEditableElement) {
+    //https://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity/3866442
+      var range,selection;
+      if(document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+
+      {
+          range = document.createRange();//Create a range (a range is a like the selection but invisible)
+          range.selectNodeContents(contentEditableElement);//Select the entire contents of the element with the range
+          range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+          selection = window.getSelection();//get the selection object (allows you to change selection)
+          selection.removeAllRanges();//remove any selections already made
+          selection.addRange(range);//make the range you have just created the visible selection
+      }
+      else if(document.selection)//IE 8 and lower
+      { 
+          range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
+          range.moveToElementText(contentEditableElement);//Select the entire contents of the element with the range
+          range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+          range.select();//Select the range (make it the visible selection
+      }
+  }  
+  
   edit (idx) {
+    const parent = $(`div#list_${idx}`).parent(); 
+    parent.find(`div.saveEdit`).addClass("show");
+    parent.find(`div.edit`).removeClass("show");
     const textBox = $(`div#list_${idx} span.todo-item__text`);
     textBox.addClass("edit");
     textBox.prop("contenteditable", true);
     textBox.focus(); 
+    this.setEndOfContenteditable(textBox.get(0))
+    textBox.select();
+  }
+
+  saveEdit (idx) {
+    const parent = $(`div#list_${idx}`).parent(); 
+    parent.find(`div.saveEdit`).removeClass("show");
+    parent.find(`div.edit`).addClass("show");
+    this.emit("edit", idx, $(`div#list_${idx} span.todo-item__text`).html())
   }
 
   itemToMarkup (item) {
-    return html`<div class='todo-item-container'>
+    return html`
+    <div class='todo-item-container'>
       <div id=${`list_${item.idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(item.idx) } class="todo-item">
         ${item.completed ? html`<span class='checkmark'>✔</span>` : ""}
         <span class="todo-item__text ${item.completed ? 'completed' : ''}">${item.text}</span>
-      </div>>
-      <div class="fontTrellicons edit" onclick=${() => { this.edit(item.idx) }}></div>
-    </div>`;
+      </div>
+      <div class='svgWrapper edit show' onclick=${() => { this.edit(item.idx) }} >
+        <svg height="32" viewBox="0 0 24 24">
+          <title>edit</title>
+          <path d="M19.123 7.627l.52-.52a1.216 1.216 0 0 0 .001-1.72l-1.031-1.03a1.216 1.216 0 0 0-1.72 0l-.52.52 2.75 2.75zm-1.375 1.375L8.212 18.54 4 20l1.461-4.212 9.537-9.536 2.75 2.75z" fill="#959DA1" fill-rule="evenodd" />
+        </svg>
+      </div>
+      <div class='svgWrapper saveEdit' onclick=${() => { this.saveEdit(item.idx)}}>
+        <svg height="32" viewBox="0 0 24 24">
+          <title>check</title>
+          <path d="M5.779 11.355a.975.975 0 0 0-1.421-.126 1.098 1.098 0 0 0-.12 1.494l5.099 6.344L19.74 6.97a1.099 1.099 0 0 0-.072-1.497.974.974 0 0 0-1.424.075L9.388 15.846l-3.61-4.491z" fill-rule="nonzero" fill="#959DA1" />
+        </svg>
+      </div>
+    </div>
+    `;
   }
 
   trashToMarkup(item, idx) {
@@ -160,8 +206,10 @@ class ViewList extends Nanocomponent {
     console.log("viewList:render", state)
     const list = state.list;
     console.log("ViewList List:", list)
-    return html`<div class='viewList'><div class='title'>ViewList</div>
-    ${this.returnList(list, state.trash, state.filter)}
+    return html`
+    <div class='viewList'>
+      <div class='title'>ViewList</div>
+      ${this.returnList(list, state.trash, state.filter)}
     </div>`
   }
   update () {
@@ -217,8 +265,8 @@ function mainView (state, emit) {
       </div>
     </div>
     <div style='display:flex; flex-direction:row;justify-content:space-between;margin-top:2em;'>
-    ${viewList.render(state, emit)}
-    ${wastebasket.render(state, emit)}
+      ${viewList.render(state, emit)}
+      ${wastebasket.render(state, emit)}
     </div>
     ${selector.render(state, emit)}
   </div>

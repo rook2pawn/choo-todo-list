@@ -101,22 +101,68 @@ class ViewList extends Nanocomponent {
   }
   drag(ev) {
     ev.dataTransfer.setData("id", ev.target.id);
-  } 
+  }
+  setEndOfContenteditable (contentEditableElement) {
+    //https://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity/3866442
+      var range,selection;
+      if(document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+
+      {
+          range = document.createRange();//Create a range (a range is a like the selection but invisible)
+          range.selectNodeContents(contentEditableElement);//Select the entire contents of the element with the range
+          range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+          selection = window.getSelection();//get the selection object (allows you to change selection)
+          selection.removeAllRanges();//remove any selections already made
+          selection.addRange(range);//make the range you have just created the visible selection
+      }
+      else if(document.selection)//IE 8 and lower
+      { 
+          range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
+          range.moveToElementText(contentEditableElement);//Select the entire contents of the element with the range
+          range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+          range.select();//Select the range (make it the visible selection
+      }
+  }  
+  
   edit (idx) {
+    const parent = $(`div#list_${idx}`).parent(); 
+    parent.find(`div.saveEdit`).addClass("show");
+    parent.find(`div.edit`).removeClass("show");
     const textBox = $(`div#list_${idx} span.todo-item__text`);
     textBox.addClass("edit");
     textBox.prop("contenteditable", true);
     textBox.focus(); 
+    this.setEndOfContenteditable(textBox.get(0))
+    textBox.select();
+  }
+
+  saveEdit (idx) {
+    const parent = $(`div#list_${idx}`).parent(); 
+    parent.find(`div.saveEdit`).removeClass("show");
+    parent.find(`div.edit`).addClass("show");
+    this.emit("edit", idx, $(`div#list_${idx} span.todo-item__text`).html())
   }
 
   itemToMarkup (item) {
-    return html`<div class='todo-item-container'>
+    return html`
+    <div class='todo-item-container'>
       <div id=${`list_${item.idx}`} draggable="true" ondragstart=${this.drag.bind(this)} onclick=${() => this.toggle(item.idx) } class="todo-item">
         ${item.completed ? html`<span class='checkmark'>✔</span>` : ""}
         <span class="todo-item__text ${item.completed ? 'completed' : ''}">${item.text}</span>
-      </div>>
-      <div class="fontTrellicons edit" onclick=${() => { this.edit(item.idx) }}></div>
-    </div>`;
+      </div>
+      <div class='svgWrapper edit show' onclick=${() => { this.edit(item.idx) }} >
+        <svg height="32" viewBox="0 0 24 24">
+          <title>edit</title>
+          <path d="M19.123 7.627l.52-.52a1.216 1.216 0 0 0 .001-1.72l-1.031-1.03a1.216 1.216 0 0 0-1.72 0l-.52.52 2.75 2.75zm-1.375 1.375L8.212 18.54 4 20l1.461-4.212 9.537-9.536 2.75 2.75z" fill="#959DA1" fill-rule="evenodd" />
+        </svg>
+      </div>
+      <div class='svgWrapper saveEdit' onclick=${() => { this.saveEdit(item.idx)}}>
+        <svg height="32" viewBox="0 0 24 24">
+          <title>check</title>
+          <path d="M5.779 11.355a.975.975 0 0 0-1.421-.126 1.098 1.098 0 0 0-.12 1.494l5.099 6.344L19.74 6.97a1.099 1.099 0 0 0-.072-1.497.974.974 0 0 0-1.424.075L9.388 15.846l-3.61-4.491z" fill-rule="nonzero" fill="#959DA1" />
+        </svg>
+      </div>
+    </div>
+    `;
   }
 
   trashToMarkup(item, idx) {
@@ -159,8 +205,10 @@ class ViewList extends Nanocomponent {
     console.log("viewList:render", state)
     const list = state.list;
     console.log("ViewList List:", list)
-    return html`<div class='viewList'><div class='title'>ViewList</div>
-    ${this.returnList(list, state.trash, state.filter)}
+    return html`
+    <div class='viewList'>
+      <div class='title'>ViewList</div>
+      ${this.returnList(list, state.trash, state.filter)}
     </div>`
   }
   update () {
@@ -216,8 +264,8 @@ function mainView (state, emit) {
       </div>
     </div>
     <div style='display:flex; flex-direction:row;justify-content:space-between;margin-top:2em;'>
-    ${viewList.render(state, emit)}
-    ${wastebasket.render(state, emit)}
+      ${viewList.render(state, emit)}
+      ${wastebasket.render(state, emit)}
     </div>
     ${selector.render(state, emit)}
   </div>
